@@ -23,6 +23,8 @@ public class SteamWebsocketClient : MonoBehaviour
     public int portno;
     public string request;
 
+    public GameObject[] trackedObjects;
+
     [System.Serializable]
     public class SlimeVrWebsocketRequest {
         public string type;
@@ -53,28 +55,10 @@ public class SteamWebsocketClient : MonoBehaviour
     public SlimeVrWebsocketResponseConfig CurrentConf = new SlimeVrWebsocketResponseConfig();
 
 
-    string getJsonMessage() {
-        return JsonUtility.ToJson(new SlimeVrWebsocketRequest {
-            type = request
-        });
-    }
-
-
-    [ContextMenu("Send request")]
-    void logGeneratedJson() {
-        Debug.Log(string.Format("{0}", getJsonMessage()));
-        SendWebSocketMessage();
-    }
-
-    IEnumerator spammer() {
-        yield return new WaitForSeconds(0.3f);
-        logGeneratedJson();
-    }
-
     /**
-     * assumes header.type == "pos"
-     * msg is the full incoming message
-     */
+    * assumes header.type == "pos"
+    * msg is the full incoming message
+    */
     void HandlePosMessage(SlimeVrWebsocketResponseHeader head, string msg) {
         JsonUtility.FromJsonOverwrite(msg, CurrentPos);
     }
@@ -88,6 +72,12 @@ public class SteamWebsocketClient : MonoBehaviour
         JsonUtility.FromJsonOverwrite(msg, CurrentConf);
     }
 
+    
+    
+    [ContextMenu("Send request")]
+    void logGeneratedJson() {
+        SendWebSocketMessage();
+    }
 
     // Start is called before the first frame update
     [ContextMenu("open websocket")]
@@ -134,8 +124,6 @@ public class SteamWebsocketClient : MonoBehaviour
 
         // waiting for messages
         await websocket.Connect();
-
-        //StartCoroutine(spammer());
     }
 
     [ContextMenu("close socket")]
@@ -155,11 +143,11 @@ public class SteamWebsocketClient : MonoBehaviour
 
     async void SendWebSocketMessage() {
         if(websocket.State == WebSocketState.Open) {
-            // Sending bytes
-            //await websocket.Send(new byte[] { 10, 20, 30 });
-
             // Sending plain text
-            string msg = getJsonMessage();
+            string msg = JsonUtility.ToJson(new SlimeVrWebsocketRequest {
+                type = request
+            });
+
             Debug.Log(string.Format("sending: {0}", msg));
             await websocket.SendText(msg);
         }
