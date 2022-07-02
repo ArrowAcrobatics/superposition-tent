@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using NativeWebSocket;
@@ -53,17 +54,17 @@ public class SteamWebsocketClient : MonoBehaviour
         public string tracker_type = "";        // e.g. left_foot, waist, ... considered optional on serverside
     }
 
-
-    public SlimeVrWebsocketResponsePos CurrentPos = new SlimeVrWebsocketResponsePos();
-    public SlimeVrWebsocketResponseConfig CurrentConf = new SlimeVrWebsocketResponseConfig();
-
-
     /**
     * assumes header.type == "pos"
     * msg is the full incoming message
     */
-    void HandlePosMessage(SlimeVrWebsocketResponseHeader head, string msg) {
-        JsonUtility.FromJsonOverwrite(msg, CurrentPos);
+    void HandlePosMessage(SlimeVrWebsocketResponseHeader header, string msg) {
+        SlimeVrWebsocketResponsePos pos = JsonUtility.FromJson<SlimeVrWebsocketResponsePos>(msg);
+
+        GameObject trackerObject = trackerObjects.ElementAtOrDefault(header.tracker_index);
+        if (trackerObject != null) {
+            trackerObject.transform.position = new Vector3(pos.x,pos.y,pos.z);
+        }
     }
 
     /**
@@ -94,11 +95,8 @@ public class SteamWebsocketClient : MonoBehaviour
                 trackerObjects.AddRange(nulls);
             }
             trackerObjects[header.tracker_index] = g;
-
         }
     }
-
-    
     
     [ContextMenu("Send request")]
     void logGeneratedJson() {
@@ -117,13 +115,12 @@ public class SteamWebsocketClient : MonoBehaviour
 
         websocket.OnError += (e) =>
         {
-            Debug.Log("Error! " + e);
+            Debug.Log("Error! " + e.ToString());
         };
 
         websocket.OnClose += (e) =>
         {
-            Debug.Log("Connection closed!");
-            Debug.Log(e);
+            Debug.Log("Connection closed!" + e.ToString());
         };
 
         websocket.OnMessage += (bytes) =>
@@ -144,9 +141,6 @@ public class SteamWebsocketClient : MonoBehaviour
                     break;
             }
         };
-
-        // Keep sending messages at every 0.3s
-        //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
 
         // waiting for messages
         await websocket.Connect();
@@ -182,8 +176,4 @@ public class SteamWebsocketClient : MonoBehaviour
     private void OnApplicationQuit() {
         closeWebsocket();
     }
-
-
-
-
 }
