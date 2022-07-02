@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 1234928708}
   - component: {fileID: 1234928710}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SlimeVrClient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,6 +238,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portno: 21110
   request: pos
+  trackerPrefab: {fileID: 1761677191024563397, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
+  trackedObjects: []
+  CurrentPos:
+    x: 0
+    y: 0
+    z: 0
+    qx: 0
+    qy: 0
+    qz: 0
+    qw: 0
+  CurrentConf:
+    location: 
+    tracker_type: 
 --- !u!4 &1234928709
 Transform:
   m_ObjectHideFlags: 0

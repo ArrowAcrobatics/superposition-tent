@@ -22,8 +22,10 @@ public class SteamWebsocketClient : MonoBehaviour
     WebSocket websocket;
     public int portno;
     public string request;
+    public GameObject trackerPrefab;
 
     public GameObject[] trackedObjects;
+    
 
     [System.Serializable]
     public class SlimeVrWebsocketRequest {
@@ -69,7 +71,20 @@ public class SteamWebsocketClient : MonoBehaviour
      * 
      */
     void HandleConfigMessage(SlimeVrWebsocketResponseHeader header, string msg) {
-        JsonUtility.FromJsonOverwrite(msg, CurrentConf);
+        SlimeVrWebsocketResponseConfig conf = JsonUtility.FromJson<SlimeVrWebsocketResponseConfig>(msg);
+
+        // creates gameobject with SlimeVr location as name
+        Transform t = transform.Find(conf.location);
+        if(t == null) {
+            
+            if(trackerPrefab != null) {
+                Object g = Instantiate(trackerPrefab, transform, false);
+                g.name = conf.location;
+            } else {
+                GameObject g = new GameObject(conf.location);
+                g.transform.SetParent(transform, false); // keep position at (0,0,0) by setting worldPositionStays to false.
+            }
+        }
     }
 
     
