@@ -4,6 +4,19 @@ using UnityEngine;
 
 using NativeWebSocket;
 
+/**
+ * Note about accepted messages towards server
+ * 
+ * "type": "pos"
+ *      parsePosition()             // sends messages per tracker back to us.
+ *      
+ * "type": "action"
+ *      "name": "calibrate"         // calls Main.vrServer.resetTrackersYaw();
+ *      "name": "full_calibrate"    // calls Main.vrServer.resetTrackers();
+ * 
+ * "type": "config"                 // unhandled serverside
+ * 
+ */
 public class SteamWebsocketClient : MonoBehaviour
 {
     WebSocket websocket;
@@ -11,19 +24,33 @@ public class SteamWebsocketClient : MonoBehaviour
     public string request;
 
     [System.Serializable]
-    public class SlimeVrWebsocketRequest
-    {
+    public class SlimeVrWebsocketRequest {
         public string type;
     }
 
     [System.Serializable]
-    public class SlimeVrWebsocketResponsePos
+    public class SlimeVrWebsocketResponseHeader
     {
-        public float x, y, z, qx, qy, qz, qw;
-        public string tracker_id = "";
+        public string type = "";        // equal to "pos" or "config"
+        // public string src;           // must be equal to "full". we'll ignore it. 
+        public string tracker_id = "";  // "SlimeVR Tracker {i}"
     }
 
+    [System.Serializable]
+    public class SlimeVrWebsocketResponsePos {
+        public float x, y, z;           // vec3
+        public float qx, qy, qz, qw;    // quaternion
+    }
+
+    [System.Serializable]
+    public class SlimeVrWebsocketResponseConfig {
+        public string location = "";            // e.g. left_foot, waist, ...
+        public string tracker_type = "";        // e.g. left_foot, waist, ... considered optional on serverside
+    }
+
+
     public SlimeVrWebsocketResponsePos CurrentPos = new SlimeVrWebsocketResponsePos();
+    public SlimeVrWebsocketResponseConfig CurrentConf = new SlimeVrWebsocketResponseConfig();
 
 
     string getJsonMessage() {
@@ -44,6 +71,22 @@ public class SteamWebsocketClient : MonoBehaviour
         logGeneratedJson();
     }
 
+    /**
+     * assumes header.type == "pos"
+     * msg is the full incoming message
+     */
+    void HandlePosMessage(SlimeVrWebsocketResponseHeader head, string msg) {
+        JsonUtility.FromJsonOverwrite(msg, CurrentPos);
+    }
+
+    /**
+     * assumes header.type == "config"
+     * msg is the full incoming message
+     * 
+     */
+    void HandleConfigMessage(SlimeVrWebsocketResponseHeader header, string msg) {
+        JsonUtility.FromJsonOverwrite(msg, CurrentConf);
+    }
 
 
     // Start is called before the first frame update
@@ -72,7 +115,18 @@ public class SteamWebsocketClient : MonoBehaviour
             string msg = System.Text.Encoding.Default.GetString(bytes);
             Debug.Log(string.Format("onMessage: {0}", msg));
 
-            JsonUtility.FromJsonOverwrite(msg, CurrentPos);
+            SlimeVrWebsocketResponseHeader h = JsonUtility.FromJson<SlimeVrWebsocketResponseHeader>(msg);
+            switch(h.type) {
+                case "pos":
+                    HandlePosMessage(h, msg);
+                    break;
+                case "config":
+                    HandleConfigMessage(h, msg);
+                    break;
+                default:
+                    Debug.LogWarning("unhandled message");
+                    break;
+            }
         };
 
         // Keep sending messages at every 0.3s
@@ -114,5 +168,8 @@ public class SteamWebsocketClient : MonoBehaviour
     private void OnApplicationQuit() {
         closeWebsocket();
     }
+
+
+
 
 }
