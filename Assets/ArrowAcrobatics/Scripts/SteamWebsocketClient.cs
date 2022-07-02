@@ -161,8 +161,12 @@ public class SteamWebsocketClient : MonoBehaviour
 #endif
     }
 
+    void FixedUpdate() {
+        SendWebSocketMessage();
+    }
+
     async void SendWebSocketMessage() {
-        if(websocket.State == WebSocketState.Open) {
+        if(websocket != null && websocket.State == WebSocketState.Open) {
             // Sending plain text
             string msg = JsonUtility.ToJson(new SlimeVrWebsocketRequest {
                 type = request
