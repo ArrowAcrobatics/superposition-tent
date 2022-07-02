@@ -16,6 +16,15 @@ public class SteamWebsocketClient : MonoBehaviour
         public string type;
     }
 
+    [System.Serializable]
+    public class SlimeVrWebsocketResponsePos
+    {
+        public float x, y, z, qx, qy, qz, qw;
+        public string tracker_id = "";
+    }
+
+    public SlimeVrWebsocketResponsePos CurrentPos = new SlimeVrWebsocketResponsePos();
+
 
     string getJsonMessage() {
         return JsonUtility.ToJson(new SlimeVrWebsocketRequest {
@@ -60,11 +69,10 @@ public class SteamWebsocketClient : MonoBehaviour
 
         websocket.OnMessage += (bytes) =>
         {
-            Debug.Log(string.Format("onMessage: {0}", System.Text.Encoding.Default.GetString(bytes)));
+            string msg = System.Text.Encoding.Default.GetString(bytes);
+            Debug.Log(string.Format("onMessage: {0}", msg));
 
-            // getting the message as a string
-            // var message = System.Text.Encoding.UTF8.GetString(bytes);
-            // Debug.Log("OnMessage! " + message);
+            JsonUtility.FromJsonOverwrite(msg, CurrentPos);
         };
 
         // Keep sending messages at every 0.3s
