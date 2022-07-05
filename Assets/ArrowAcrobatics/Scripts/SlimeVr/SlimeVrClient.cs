@@ -6,59 +6,24 @@ using UnityEngine;
 using NativeWebSocket;
 
 /**
- * Note about accepted messages towards server
- * 
- * "type": "pos"
- *      parsePosition()             // sends messages per tracker back to us.
- *      
- * "type": "action"
- *      "name": "calibrate"         // calls Main.vrServer.resetTrackersYaw();
- *      "name": "full_calibrate"    // calls Main.vrServer.resetTrackers();
- * 
- * "type": "config"                 // unhandled serverside
- * 
+ * Establishes connection with SlimeVr server and parses messages.
  */
-public class SteamWebsocketClient : MonoBehaviour
-{
-    WebSocket websocket;
+public class SlimeVrClient : MonoBehaviour
+{    
     public int portno;
-    public string request;
+    public SlimeVr.RequestType requestType = SlimeVr.RequestType.Position;
+    public bool liveUpdatePosition = false;
+
     public GameObject trackerPrefab;
-
     public List<GameObject> trackerObjects = new List<GameObject>();
-    
 
-    [System.Serializable]
-    public class SlimeVrWebsocketRequest {
-        public string type;
-    }
-
-    [System.Serializable]
-    public class SlimeVrWebsocketResponseHeader
-    {
-        public string type = "";        // equal to "pos" or "config"
-        // public string src;           // must be equal to "full". we'll ignore it. 
-        public string tracker_id = "";  // "SlimeVR Tracker {i}"
-        public int tracker_index;       // the {i} in the above for performance
-    }
-
-    [System.Serializable]
-    public class SlimeVrWebsocketResponsePos {
-        public float x, y, z;           // vec3
-        public float qx, qy, qz, qw;    // quaternion
-    }
-
-    [System.Serializable]
-    public class SlimeVrWebsocketResponseConfig {
-        public string location = "";            // e.g. left_foot, waist, ...
-        public string tracker_type = "";        // e.g. left_foot, waist, ... considered optional on serverside
-    }
+    private WebSocket websocket;
 
     /**
     * assumes header.type == "pos"
     * msg is the full incoming message
     */
-    void HandlePosMessage(SlimeVrWebsocketResponseHeader header, string msg) {
+    void HandlePosMessage(SlimeVr.ResponseHeader header, string msg) {
         SlimeVrWebsocketResponsePos pos = JsonUtility.FromJson<SlimeVrWebsocketResponsePos>(msg);
 
         GameObject trackerObject = trackerObjects.ElementAtOrDefault(header.tracker_index);
@@ -72,7 +37,7 @@ public class SteamWebsocketClient : MonoBehaviour
      * msg is the full incoming message
      * 
      */
-    void HandleConfigMessage(SlimeVrWebsocketResponseHeader header, string msg) {
+    void HandleConfigMessage(SlimeVr.ResponseHeader header, string msg) {
         SlimeVrWebsocketResponseConfig conf = JsonUtility.FromJson<SlimeVrWebsocketResponseConfig>(msg);
 
         // creates gameobject with SlimeVr location as name
@@ -100,7 +65,7 @@ public class SteamWebsocketClient : MonoBehaviour
     
     [ContextMenu("Send request")]
     void logGeneratedJson() {
-        SendWebSocketMessage();
+        SendWebSocketMessage(new SlimeVr.Request(requestType));
     }
 
     // Start is called before the first frame update
@@ -128,7 +93,7 @@ public class SteamWebsocketClient : MonoBehaviour
             string msg = System.Text.Encoding.Default.GetString(bytes);
             Debug.Log(string.Format("onMessage: {0}", msg));
 
-            SlimeVrWebsocketResponseHeader h = JsonUtility.FromJson<SlimeVrWebsocketResponseHeader>(msg);
+            SlimeVr.ResponseHeader h = JsonUtility.FromJson<SlimeVr.ResponseHeader>(msg);
             switch(h.type) {
                 case "pos":
                     HandlePosMessage(h, msg);
@@ -162,15 +127,15 @@ public class SteamWebsocketClient : MonoBehaviour
     }
 
     void FixedUpdate() {
-        SendWebSocketMessage();
+        if(liveUpdatePosition) {
+            SendWebSocketMessage(new SlimeVr.Request(requestType));
+        }
     }
 
-    async void SendWebSocketMessage() {
+    async void SendWebSocketMessage(SlimeVr.Request req ) {
         if(websocket != null && websocket.State == WebSocketState.Open) {
             // Sending plain text
-            string msg = JsonUtility.ToJson(new SlimeVrWebsocketRequest {
-                type = request
-            });
+            string msg = req.ToString();
 
             Debug.Log(string.Format("sending: {0}", msg));
             await websocket.SendText(msg);
