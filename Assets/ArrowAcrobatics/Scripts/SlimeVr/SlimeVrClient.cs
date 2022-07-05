@@ -12,19 +12,44 @@ public class SlimeVrClient : MonoBehaviour
 {    
     public int portno;
     public SlimeVr.RequestType requestType = SlimeVr.RequestType.Position;
-    public bool liveUpdatePosition = false;
+    public bool liveUpdatePosition = true;
 
     public GameObject trackerPrefab;
     public List<GameObject> trackerObjects = new List<GameObject>();
 
     private WebSocket websocket;
 
+    #region Unity block
+    void Update() {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        if(websocket != null) {
+            websocket.DispatchMessageQueue();
+        }
+#endif
+    }
+
+    void FixedUpdate() {
+        if(liveUpdatePosition) {
+            SendWebSocketMessage(new SlimeVr.Request(requestType));
+        }
+    }
+
+    private void OnApplicationQuit() {
+        closeWebsocket();
+    }
+    #endregion
+
+
+    #region websocket related stuff
+
     /**
-    * assumes header.type == "pos"
-    * msg is the full incoming message
-    */
+     * Adjusts position of the relevant tracker gameobject using the tracker_index.
+     * 
+     * assumes header.type == "pos"
+     * msg is the full incoming message
+     */
     void HandlePosMessage(SlimeVr.ResponseHeader header, string msg) {
-        SlimeVrWebsocketResponsePos pos = JsonUtility.FromJson<SlimeVrWebsocketResponsePos>(msg);
+        SlimeVr.ResponsePos pos = JsonUtility.FromJson<SlimeVr.ResponsePos>(msg);
 
         GameObject trackerObject = trackerObjects.ElementAtOrDefault(header.tracker_index);
         if (trackerObject != null) {
@@ -33,12 +58,14 @@ public class SlimeVrClient : MonoBehaviour
     }
 
     /**
-     * assumes header.type == "config"
-     * msg is the full incoming message
+     * Creates an instance of trackerPrefab as child of this gameobject and 
+     * adds reference in the trackerObjects array at the given index.
      * 
+     * assumes header.type == "config".
+     * msg is the full incoming message.
      */
     void HandleConfigMessage(SlimeVr.ResponseHeader header, string msg) {
-        SlimeVrWebsocketResponseConfig conf = JsonUtility.FromJson<SlimeVrWebsocketResponseConfig>(msg);
+        SlimeVr.ResponseConfig conf = JsonUtility.FromJson<SlimeVr.ResponseConfig>(msg);
 
         // creates gameobject with SlimeVr location as name
         Transform t = transform.Find(conf.location);
@@ -64,7 +91,7 @@ public class SlimeVrClient : MonoBehaviour
     }
     
     [ContextMenu("Send request")]
-    void logGeneratedJson() {
+    void sendCurrentRequest() {
         SendWebSocketMessage(new SlimeVr.Request(requestType));
     }
 
@@ -118,20 +145,6 @@ public class SlimeVrClient : MonoBehaviour
         }
     }
 
-    void Update() {
-#if !UNITY_WEBGL || UNITY_EDITOR
-        if(websocket != null) {
-            websocket.DispatchMessageQueue();
-        }
-#endif
-    }
-
-    void FixedUpdate() {
-        if(liveUpdatePosition) {
-            SendWebSocketMessage(new SlimeVr.Request(requestType));
-        }
-    }
-
     async void SendWebSocketMessage(SlimeVr.Request req ) {
         if(websocket != null && websocket.State == WebSocketState.Open) {
             // Sending plain text
@@ -141,8 +154,5 @@ public class SlimeVrClient : MonoBehaviour
             await websocket.SendText(msg);
         }
     }
-
-    private void OnApplicationQuit() {
-        closeWebsocket();
-    }
+    #endregion
 }
