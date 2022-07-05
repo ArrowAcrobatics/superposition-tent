@@ -216,7 +216,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1234928709}
   - component: {fileID: 1234928708}
-  - component: {fileID: 1234928710}
   m_Layer: 0
   m_Name: SlimeVrClient
   m_TagString: Untagged
@@ -239,18 +238,7 @@ MonoBehaviour:
   portno: 21110
   request: pos
   trackerPrefab: {fileID: 1761677191024563397, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
-  trackedObjects: []
-  CurrentPos:
-    x: 0
-    y: 0
-    z: 0
-    qx: 0
-    qy: 0
-    qz: 0
-    qw: 0
-  CurrentConf:
-    location: 
-    tracker_type: 
+  trackerObjects: []
 --- !u!4 &1234928709
 Transform:
   m_ObjectHideFlags: 0
@@ -265,18 +253,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1234928710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234928707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c98f63d5ad130842bc9f85ba856939f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1266662371
 GameObject:
   m_ObjectHideFlags: 0
