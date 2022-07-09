@@ -94,6 +94,7 @@ public class SlimeVrClient : MonoBehaviour
         GameObject trackerObject = trackerObjects.ElementAtOrDefault(header.tracker_index);
         if (trackerObject != null) {
             trackerObject.transform.position = new Vector3(pos.x,pos.y,pos.z);
+            trackerObject.transform.rotation = new Quaternion(pos.qx, pos.qy, pos.qz, pos.qw);
         }
     }
 
