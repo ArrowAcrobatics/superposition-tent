@@ -45,6 +45,8 @@ public class SlimeVrClient : MonoBehaviour
     }
 
     void OnEnable() {
+        openWebsocket();
+
         if(resetTrackers) {
             resetTrackers.action.performed += ResetTrackers;
         }
@@ -54,6 +56,8 @@ public class SlimeVrClient : MonoBehaviour
     }
 
     void OnDisable() {
+        closeWebsocket();
+
         if(resetTrackers) {
             resetTrackers.action.performed -= ResetTrackers;
         }
@@ -133,7 +137,7 @@ public class SlimeVrClient : MonoBehaviour
 
     // Start is called before the first frame update
     [ContextMenu("open websocket")]
-    async void open() {
+    async void openWebsocket() {
         websocket = new WebSocket(string.Format("ws://localhost:{0}", portno));
 
         websocket.OnOpen += () =>
