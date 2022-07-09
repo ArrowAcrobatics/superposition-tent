@@ -506,6 +506,8 @@ MonoBehaviour:
   liveUpdatePosition: 1
   trackerPrefab: {fileID: 1761677191024563397, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
   trackerObjects: []
+  resetTrackers: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  resetTrackersFully: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!4 &1234928709
 Transform:
   m_ObjectHideFlags: 0

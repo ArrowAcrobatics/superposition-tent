@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using NativeWebSocket;
 
@@ -13,9 +14,14 @@ public class SlimeVrClient : MonoBehaviour
     public int portno;
     public SlimeVr.RequestType requestType = SlimeVr.RequestType.Position;
     public bool liveUpdatePosition = true;
+    public bool verboseLogging = false;
 
     public GameObject trackerPrefab;
     public List<GameObject> trackerObjects = new List<GameObject>();
+
+
+    [SerializeField] InputActionReference resetTrackers;
+    [SerializeField] InputActionReference resetTrackersFully;
 
     private WebSocket websocket;
 
@@ -37,6 +43,36 @@ public class SlimeVrClient : MonoBehaviour
     private void OnApplicationQuit() {
         closeWebsocket();
     }
+
+    void OnEnable() {
+        if(resetTrackers) {
+            resetTrackers.action.performed += ResetTrackers;
+        }
+        if(resetTrackersFully) {
+            resetTrackersFully.action.performed += ResetTrackersFully;
+        }
+    }
+
+    void OnDisable() {
+        if(resetTrackers) {
+            resetTrackers.action.performed -= ResetTrackers;
+        }
+        if(resetTrackersFully) {
+            resetTrackersFully.action.performed -= ResetTrackersFully;
+        }
+    }
+
+    void ResetTrackers(InputAction.CallbackContext ctx) {
+        Debug.Log("ResetTrackers()");
+        SendWebSocketMessage(SlimeVr.RequestType.Reset);
+    }
+
+    void ResetTrackersFully(InputAction.CallbackContext ctx) {
+        Debug.Log("ResetTrackersFully()");
+        SendWebSocketMessage(SlimeVr.RequestType.FullReset);
+    }
+
+
     #endregion
 
 
@@ -118,7 +154,9 @@ public class SlimeVrClient : MonoBehaviour
         websocket.OnMessage += (bytes) =>
         {
             string msg = System.Text.Encoding.Default.GetString(bytes);
-            Debug.Log(string.Format("onMessage: {0}", msg));
+            if(verboseLogging) {
+                Debug.Log(string.Format("onMessage: {0}", msg));
+            }
 
             SlimeVr.ResponseHeader h = JsonUtility.FromJson<SlimeVr.ResponseHeader>(msg);
             switch(h.type) {
@@ -145,12 +183,18 @@ public class SlimeVrClient : MonoBehaviour
         }
     }
 
+    void SendWebSocketMessage(SlimeVr.RequestType reqType) {
+        SendWebSocketMessage(new SlimeVr.Request(reqType));
+    }
+
     async void SendWebSocketMessage(SlimeVr.Request req ) {
         if(websocket != null && websocket.State == WebSocketState.Open) {
             // Sending plain text
             string msg = req.ToString();
 
-            Debug.Log(string.Format("sending: {0}", msg));
+            if (verboseLogging) {
+                Debug.Log(string.Format("sending: {0}", msg));
+            }
             await websocket.SendText(msg);
         }
     }

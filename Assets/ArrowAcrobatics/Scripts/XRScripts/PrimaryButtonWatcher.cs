@@ -52,7 +52,6 @@ public class PrimaryButtonWatcher : MonoBehaviour
             devicesWithPrimaryButton.Remove(device);
     }
 
-    private int updateCount = 0;
     void Update() {
         bool tempState = false;
 
