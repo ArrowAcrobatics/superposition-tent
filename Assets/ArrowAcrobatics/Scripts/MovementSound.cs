@@ -4,12 +4,20 @@ using UnityEngine;
 
 /**
  * Measures angles/velocities/relavite position and turns it into sound.
+ * 
+ * TODO: rename to SkeletonEnforcer or something
  */
 public class MovementSound : MonoBehaviour
 {
+    [Tooltip("The parent and child will be searched for in this object")]
+    public GameObject HostObject;
+    public string parentName = "";
+    public string childName = "";
+    
     public GameObject soundParent;
     public GameObject soundChild;
 
+    bool restPositionAqcuired { get { return restPositionParent != null && restPositionChild != null; } }
     private GameObject restPositionParent;
     private GameObject restPositionChild;
     
@@ -25,12 +33,39 @@ public class MovementSound : MonoBehaviour
         }
     }
 
-    public void OnEnable() {
-        resetRestPosition();
+    public void Update() {
+        FindTargetObjects();
+        EnforceParentRelationship();
+        if(!restPositionAqcuired) {
+            ResetRestPosition();
+        }
+    }
+
+    void FindTargetObjects() {
+        Transform t;
+        if(soundParent == null) {
+            t = HostObject.transform.Find(parentName);
+            if(t != null) {
+                soundParent = t.gameObject;
+            }
+        }
+
+        if(soundChild == null) {
+            t = HostObject.transform.Find(childName);
+            if(t != null) {
+                soundChild = t.gameObject;
+            }
+        }
+    }
+
+    void EnforceParentRelationship() {
+        if (soundChild != null && soundParent != null && soundChild.transform.parent != soundParent) {
+            soundChild.transform.SetParent(soundParent.transform, true);
+        }
     }
 
     [ContextMenu("resetPosition")]
-    public void resetRestPosition() {
+    public void ResetRestPosition() {
         if (restPositionParent != null) {
             Destroy(restPositionParent);
         }
