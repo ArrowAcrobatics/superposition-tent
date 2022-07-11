@@ -56,31 +56,7 @@ public class SlimeVr
                 }
             }
         }
-        //Request RequestPosition() {
-        //    return new Request {
-        //        type = "pos"
-        //    };
-        //}
 
-        //Request RequestReset() {
-        //    return new Request {
-        //        type = "action",
-        //        name = "calibrate"
-        //    };
-        //}
-
-        //Request RequestFullReset() {
-        //    return new Request {
-        //        type = "action",
-        //        name = "full_calibrate"
-        //    };
-        //}
-
-        //Request RequestConfig() {
-        //    return new Request {
-        //        type = "config",
-        //    };
-        //}
         public override string ToString() { 
             return JsonUtility.ToJson(this);
         }

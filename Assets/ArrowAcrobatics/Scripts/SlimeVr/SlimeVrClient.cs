@@ -108,10 +108,11 @@ public class SlimeVrClient : MonoBehaviour
     void HandleConfigMessage(SlimeVr.ResponseHeader header, string msg) {
         SlimeVr.ResponseConfig conf = JsonUtility.FromJson<SlimeVr.ResponseConfig>(msg);
 
-        // creates gameobject with SlimeVr location as name
         Transform t = transform.Find(conf.location);
-        if(t == null) {
-            GameObject g = null;
+        GameObject g = t != null ? t.gameObject : null;
+
+        // if necessary, create gameobject with SlimeVr location as name (using prefab)
+        if(g == null) {
             if(trackerPrefab != null) {
                 g = Instantiate(trackerPrefab, transform, false) as GameObject;
                 g.name = conf.location;
@@ -119,15 +120,22 @@ public class SlimeVrClient : MonoBehaviour
                 g = new GameObject(conf.location);
                 g.transform.SetParent(transform, false); // keep position at (0,0,0) by setting worldPositionStays to false.
             }
+        }
 
-            // add tracker to our list at correct index
-            int diff = header.tracker_index - trackerObjects.Count;
-            if(diff >= 0) {
-                Debug.Log(string.Format("adding {0} elements to list of count {1} to accomodate for index {2}", diff+1, trackerObjects.Count, header.tracker_index));
-                GameObject[] nulls = new GameObject[diff+1];
-                trackerObjects.AddRange(nulls);
-            }
-            trackerObjects[header.tracker_index] = g;
+        // add tracker to our list at correct index
+        EnsureIndexExists(header.tracker_index);
+        trackerObjects[header.tracker_index] = g;
+    }
+
+    /**
+     * Expands trackerObjects array with null objects to accomodate for given index.
+     */
+    void EnsureIndexExists(int i) {
+        int diff = i - trackerObjects.Count;
+        if(diff >= 0) {
+            Debug.Log(string.Format("adding {0} elements to list of count {1} to accomodate for index {2}", diff+1, trackerObjects.Count, i));
+            GameObject[] nulls = new GameObject[diff+1];
+            trackerObjects.AddRange(nulls);
         }
     }
     
