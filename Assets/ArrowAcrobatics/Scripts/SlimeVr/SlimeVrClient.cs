@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,29 @@ using NativeWebSocket;
  * Establishes connection with SlimeVr server and parses messages.
  */
 public class SlimeVrClient : MonoBehaviour
-{    
+{
     public int portno;
     public SlimeVr.RequestType requestType = SlimeVr.RequestType.Position;
     public bool liveUpdatePosition = true;
     public bool verboseLogging = false;
 
+    public bool resetTrackersServerSide = false;
+    public bool resetTrackerMonobehaviours = false;
+
     [Tooltip("this is where the tracker prefabs will spawn into")]
     public GameObject SlimeSkeleton;
-    public GameObject trackerPrefab;
+
+    // will be populated at runtime with SlimeVrTracker objects found in the Skeleton.
     public List<GameObject> trackerObjects = new List<GameObject>();
+
+    // populated in Awake with the SlimeVrTracker behaviours found in the Skeleton.
     private List<SlimeVrTracker> trackerComponents = new List<SlimeVrTracker>();
 
 
     [SerializeField] InputActionReference resetTrackers;
     [SerializeField] InputActionReference resetTrackersFully;
+
+    public event EventHandler slimeVrResetEvent;
 
     private WebSocket websocket;
 
@@ -33,6 +42,10 @@ public class SlimeVrClient : MonoBehaviour
 
     void Awake() {
         trackerComponents = SlimeSkeleton.GetComponentsInChildren<SlimeVrTracker>().ToList();
+
+        foreach(SlimeVrTracker tracker in trackerComponents) {
+            tracker.Initialize(this);
+        }
     }
 
     void Update() {
@@ -77,12 +90,23 @@ public class SlimeVrClient : MonoBehaviour
 
     void ResetTrackers(InputAction.CallbackContext ctx) {
         Debug.Log("ResetTrackers()");
-        SendWebSocketMessage(SlimeVr.RequestType.Reset);
+       
+        if(resetTrackersServerSide) { 
+            SendWebSocketMessage(SlimeVr.RequestType.Reset);
+        } 
+        if(resetTrackerMonobehaviours) {
+            slimeVrResetEvent.Invoke(this, EventArgs.Empty);
+        }
     }
 
     void ResetTrackersFully(InputAction.CallbackContext ctx) {
         Debug.Log("ResetTrackersFully()");
-        SendWebSocketMessage(SlimeVr.RequestType.FullReset);
+        if(resetTrackersServerSide) {
+            SendWebSocketMessage(SlimeVr.RequestType.FullReset);
+        }
+        if(resetTrackerMonobehaviours) {
+            slimeVrResetEvent.Invoke(this, EventArgs.Empty);
+        }
     }
 
 
@@ -108,8 +132,8 @@ public class SlimeVrClient : MonoBehaviour
     }
 
     /**
-     * Creates an instance of trackerPrefab as child of this gameobject and 
-     * adds reference in the trackerObjects array at the given index.
+     * Adds a reference in the trackerObjects array at the given tracker_index if a suitable SlimeVrTracker
+     * monobehaviour is found in the Skeleton.
      * 
      * assumes header.type == "config".
      * msg is the full incoming message.
@@ -124,19 +148,6 @@ public class SlimeVrClient : MonoBehaviour
                 break;
             }
         }
-        //Transform t = SlimeSkeleton.transform.Find(conf.location);
-        //GameObject g = t != null ? t.gameObject : null;
-
-        // if necessary, create gameobject with SlimeVr location as name (using prefab)
-        //if(g == null) {
-        //    if(trackerPrefab != null) {
-        //        g = Instantiate(trackerPrefab, SlimeSkeleton.transform, false) as GameObject;
-        //        g.name = conf.location;
-        //    } else {
-        //        g = new GameObject(conf.location);
-        //        g.transform.SetParent(SlimeSkeleton.transform, false); // keep position at (0,0,0) by setting worldPositionStays to false.
-        //    }
-        //}
 
         // add tracker to our list at correct index
         EnsureIndexExists(header.tracker_index);
@@ -149,7 +160,6 @@ public class SlimeVrClient : MonoBehaviour
     void EnsureIndexExists(int i) {
         int diff = i - trackerObjects.Count;
         if(diff >= 0) {
-            Debug.Log(string.Format("adding {0} elements to list of count {1} to accomodate for index {2}", diff+1, trackerObjects.Count, i));
             GameObject[] nulls = new GameObject[diff+1];
             trackerObjects.AddRange(nulls);
         }
