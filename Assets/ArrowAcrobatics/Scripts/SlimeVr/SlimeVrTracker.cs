@@ -17,7 +17,7 @@ public class SlimeVrTracker : MonoBehaviour
         public float angle;
     }
 
-    public List<TripointAngle> angles;
+    public List<TripointAngle> triangles;
 
     // the client instance that initialized us.
     private SlimeVrClient hostClient;
@@ -57,6 +57,14 @@ public class SlimeVrTracker : MonoBehaviour
         EnableResetCallback(false);
     }
 
+    void Update() {
+        Vector3 pos = transform.position;
+        foreach(TripointAngle triangle in triangles) {
+            triangle.angle = Vector3.Angle(triangle.left.transform.position - pos, triangle.right.transform.position - pos);
+        }
+    }
+
+
     void OnSlimeReset(object sender, EventArgs e) {
         Debug.Log("tracker responded to slime reset");
         FindTripoints();
@@ -76,12 +84,13 @@ public class SlimeVrTracker : MonoBehaviour
                 nodes.Add(tracker);
             }
         }
+        Debug.Log("nodes.Count: " + nodes.Count.ToString());
 
         // go over all ordered pairs in nodes.
-        angles = new List<TripointAngle>();
+        triangles = new List<TripointAngle>();
         for (int i = 0; i < nodes.Count; i++) {
             for (int j = 0; j < i; j++) {
-                angles.Add(new TripointAngle {
+                triangles.Add(new TripointAngle {
                     left = nodes[i],
                     right = nodes[j],
                     angle = 0

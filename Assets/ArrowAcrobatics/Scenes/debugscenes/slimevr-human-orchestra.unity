@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1001 &427725549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -288,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &625366228
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1001 &676819440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -511,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &730892719
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &754089408
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &1067432658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,8 +1023,9 @@ MonoBehaviour:
   requestType: 0
   liveUpdatePosition: 1
   verboseLogging: 0
+  resetTrackersServerSide: 0
+  resetTrackerMonobehaviours: 1
   SlimeSkeleton: {fileID: 1682312678}
-  trackerPrefab: {fileID: 1761677191024563397, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
   trackerObjects: []
   resetTrackers: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   resetTrackersFully: {fileID: 0}
@@ -1128,6 +1135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &1266662371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1001 &1337389690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1425,6 +1434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &1431313270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &1630512914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
 --- !u!1 &2054045639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,3 +2857,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triangles: []
