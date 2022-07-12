@@ -20,6 +20,7 @@ public class SlimeVrClient : MonoBehaviour
     public GameObject SlimeSkeleton;
     public GameObject trackerPrefab;
     public List<GameObject> trackerObjects = new List<GameObject>();
+    private List<SlimeVrTracker> trackerComponents = new List<SlimeVrTracker>();
 
 
     [SerializeField] InputActionReference resetTrackers;
@@ -28,6 +29,12 @@ public class SlimeVrClient : MonoBehaviour
     private WebSocket websocket;
 
     #region Unity block
+
+
+    void Awake() {
+        trackerComponents = SlimeSkeleton.GetComponentsInChildren<SlimeVrTracker>().ToList();
+    }
+
     void Update() {
 #if !UNITY_WEBGL || UNITY_EDITOR
         if(websocket != null) {
@@ -110,19 +117,26 @@ public class SlimeVrClient : MonoBehaviour
     void HandleConfigMessage(SlimeVr.ResponseHeader header, string msg) {
         SlimeVr.ResponseConfig conf = JsonUtility.FromJson<SlimeVr.ResponseConfig>(msg);
 
-        Transform t = SlimeSkeleton.transform.Find(conf.location);
-        GameObject g = t != null ? t.gameObject : null;
-
-        // if necessary, create gameobject with SlimeVr location as name (using prefab)
-        if(g == null) {
-            if(trackerPrefab != null) {
-                g = Instantiate(trackerPrefab, SlimeSkeleton.transform, false) as GameObject;
-                g.name = conf.location;
-            } else {
-                g = new GameObject(conf.location);
-                g.transform.SetParent(SlimeSkeleton.transform, false); // keep position at (0,0,0) by setting worldPositionStays to false.
+        GameObject g = null;
+        foreach(SlimeVrTracker tracker in trackerComponents) {
+            if (tracker.gameObject.name == conf.location) {
+                g = tracker.gameObject;
+                break;
             }
         }
+        //Transform t = SlimeSkeleton.transform.Find(conf.location);
+        //GameObject g = t != null ? t.gameObject : null;
+
+        // if necessary, create gameobject with SlimeVr location as name (using prefab)
+        //if(g == null) {
+        //    if(trackerPrefab != null) {
+        //        g = Instantiate(trackerPrefab, SlimeSkeleton.transform, false) as GameObject;
+        //        g.name = conf.location;
+        //    } else {
+        //        g = new GameObject(conf.location);
+        //        g.transform.SetParent(SlimeSkeleton.transform, false); // keep position at (0,0,0) by setting worldPositionStays to false.
+        //    }
+        //}
 
         // add tracker to our list at correct index
         EnsureIndexExists(header.tracker_index);
