@@ -8,17 +8,6 @@ using UnityEngine;
  */
 public class SlimeVrTracker : MonoBehaviour
 {
-    [System.Serializable]
-    public class JointAngle {
-        // this tracker is the middle,
-        // left and right are either children or the parent of this object.
-        public SlimeVrTracker left;
-        public SlimeVrTracker right;
-        public float angle;
-    }
-
-    public List<JointAngle> joints;
-
     /**
      * just a nullable wrapper for Vector3
      */
@@ -56,7 +45,7 @@ public class SlimeVrTracker : MonoBehaviour
 
     #region Unity Callbacks
     void Awake() {
-        FindTripoints();
+        GetParentTracker();
     }
 
     void OnEnable() {
@@ -68,11 +57,6 @@ public class SlimeVrTracker : MonoBehaviour
     }
 
     void Update() {
-        Vector3 pos = transform.position;
-        foreach(JointAngle joint in joints) {
-            joint.angle = Vector3.Angle(joint.left.transform.position - pos, joint.right.transform.position - pos);
-        }
-
         if(parentTracker != null) {
             localEulerAngles = transform.localRotation.eulerAngles;
         } else {
@@ -101,35 +85,10 @@ public class SlimeVrTracker : MonoBehaviour
 
     void OnSlimeReset(object sender, EventArgs e) {
         Debug.Log("tracker responded to slime reset");
-        FindTripoints();
+        GetParentTracker();
     }
 
-    void FindTripoints() {
-        List<SlimeVrTracker> nodes = new List<SlimeVrTracker>();
-
+    void GetParentTracker() {
         parentTracker = transform.parent.GetComponent<SlimeVrTracker>();
-        if(parentTracker != null) {
-            nodes.Add(parentTracker);
-        }
-
-        foreach(Transform child in transform) {
-            SlimeVrTracker tracker = child.GetComponent<SlimeVrTracker>();
-            if(tracker != null) {
-                nodes.Add(tracker);
-            }
-        }
-        Debug.Log("nodes.Count: " + nodes.Count.ToString());
-
-        // go over all ordered pairs in nodes.
-        joints = new List<JointAngle>();
-        for (int i = 0; i < nodes.Count; i++) {
-            for (int j = 0; j < i; j++) {
-                joints.Add(new JointAngle {
-                    left = nodes[i],
-                    right = nodes[j],
-                    angle = 0
-                });
-            }
-        }
     }
 }

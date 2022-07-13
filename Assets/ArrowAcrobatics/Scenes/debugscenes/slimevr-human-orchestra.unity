@@ -209,7 +209,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!4 &312577332 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1761677191024563401, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
+  m_PrefabInstance: {fileID: 312577329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &427725549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -289,7 +295,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!114 &427725556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427725551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70a166113fed348a458a89b57e0eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 1337389691}
+  right: {fileID: 2111750466}
+  angle:
+    val: 0
+--- !u!114 &427725557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427725551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70a166113fed348a458a89b57e0eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 312577332}
+  right: {fileID: 2111750466}
+  angle:
+    val: 0
+--- !u!114 &427725558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427725551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70a166113fed348a458a89b57e0eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 312577332}
+  right: {fileID: 1337389691}
+  angle:
+    val: 0
 --- !u!1 &625366228
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1001 &676819440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -514,7 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1 &730892719
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +850,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!4 &753808516 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1761677191024563401, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
+  m_PrefabInstance: {fileID: 753808513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &754089408
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +1007,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1067432658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1266662371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1001 &1337389690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1434,7 +1500,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!114 &1337389697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337389692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70a166113fed348a458a89b57e0eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 427725550}
+  right: {fileID: 1925154484}
+  angle:
+    val: 0
 --- !u!1 &1431313270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,7 +1646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1630512914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,7 +2340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!4 &1925154484 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1761677191024563401, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
+  m_PrefabInstance: {fileID: 1925154481}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2054045639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,4 +2947,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangles: []
+  localEulerAngles:
+    angles: {x: 0, y: 0, z: 0}
+--- !u!114 &2111750472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111750467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70a166113fed348a458a89b57e0eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 427725550}
+  right: {fileID: 753808516}
+  angle:
+    val: 0
