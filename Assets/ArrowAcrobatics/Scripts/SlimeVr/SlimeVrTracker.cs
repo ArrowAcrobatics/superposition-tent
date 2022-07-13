@@ -9,7 +9,7 @@ using UnityEngine;
 public class SlimeVrTracker : MonoBehaviour
 {
     [System.Serializable]
-    public class TripointAngle {
+    public class JointAngle {
         // this tracker is the middle,
         // left and right are either children or the parent of this object.
         public SlimeVrTracker left;
@@ -17,7 +17,7 @@ public class SlimeVrTracker : MonoBehaviour
         public float angle;
     }
 
-    public List<TripointAngle> triangles;
+    public List<JointAngle> joints;
 
     /**
      * just a nullable wrapper for Vector3
@@ -69,8 +69,8 @@ public class SlimeVrTracker : MonoBehaviour
 
     void Update() {
         Vector3 pos = transform.position;
-        foreach(TripointAngle triangle in triangles) {
-            triangle.angle = Vector3.Angle(triangle.left.transform.position - pos, triangle.right.transform.position - pos);
+        foreach(JointAngle joint in joints) {
+            joint.angle = Vector3.Angle(joint.left.transform.position - pos, joint.right.transform.position - pos);
         }
 
         if(parentTracker != null) {
@@ -121,10 +121,10 @@ public class SlimeVrTracker : MonoBehaviour
         Debug.Log("nodes.Count: " + nodes.Count.ToString());
 
         // go over all ordered pairs in nodes.
-        triangles = new List<TripointAngle>();
+        joints = new List<JointAngle>();
         for (int i = 0; i < nodes.Count; i++) {
             for (int j = 0; j < i; j++) {
-                triangles.Add(new TripointAngle {
+                joints.Add(new JointAngle {
                     left = nodes[i],
                     right = nodes[j],
                     angle = 0
