@@ -19,6 +19,29 @@ public class SlimeVrTracker : MonoBehaviour
 
     public List<TripointAngle> triangles;
 
+    /**
+     * just a nullable wrapper for Vector3
+     */
+    [System.Serializable]
+    public class LocalEulerAngles
+    {
+        public Vector3 angles;
+
+        public LocalEulerAngles(float x, float y, float z) {
+            angles = new Vector3(x, y, z);
+        }
+        public LocalEulerAngles(Vector3 v) {
+            angles = v;
+        }
+
+        public static implicit operator LocalEulerAngles(Vector3 v) => new LocalEulerAngles(v);
+        public static implicit operator Vector3(LocalEulerAngles l) => l.angles;
+    }
+    public LocalEulerAngles localEulerAngles = null;
+
+    // if transform.parent has a tracker component, this is cached here
+    private SlimeVrTracker parentTracker = null;
+
     // the client instance that initialized us.
     private SlimeVrClient hostClient;
     private bool resetCallbackEnabled = false;
@@ -30,6 +53,33 @@ public class SlimeVrTracker : MonoBehaviour
         hostClient = host;
         EnableResetCallback(true);
     }
+
+    #region Unity Callbacks
+    void Awake() {
+        FindTripoints();
+    }
+
+    void OnEnable() {
+        EnableResetCallback(true);
+    }
+
+    void OnDisable() {
+        EnableResetCallback(false);
+    }
+
+    void Update() {
+        Vector3 pos = transform.position;
+        foreach(TripointAngle triangle in triangles) {
+            triangle.angle = Vector3.Angle(triangle.left.transform.position - pos, triangle.right.transform.position - pos);
+        }
+
+        if(parentTracker != null) {
+            localEulerAngles = transform.localRotation.eulerAngles;
+        } else {
+            localEulerAngles = null;
+        }
+    }
+    #endregion
 
     void EnableResetCallback(bool enable) {
         if(hostClient != null) {
@@ -49,22 +99,6 @@ public class SlimeVrTracker : MonoBehaviour
         }
     }
 
-    void OnEnable() {
-        EnableResetCallback(true);
-    }
-
-    void OnDisable() {
-        EnableResetCallback(false);
-    }
-
-    void Update() {
-        Vector3 pos = transform.position;
-        foreach(TripointAngle triangle in triangles) {
-            triangle.angle = Vector3.Angle(triangle.left.transform.position - pos, triangle.right.transform.position - pos);
-        }
-    }
-
-
     void OnSlimeReset(object sender, EventArgs e) {
         Debug.Log("tracker responded to slime reset");
         FindTripoints();
@@ -73,7 +107,7 @@ public class SlimeVrTracker : MonoBehaviour
     void FindTripoints() {
         List<SlimeVrTracker> nodes = new List<SlimeVrTracker>();
 
-        SlimeVrTracker parentTracker = transform.parent.GetComponent<SlimeVrTracker>();
+        parentTracker = transform.parent.GetComponent<SlimeVrTracker>();
         if(parentTracker != null) {
             nodes.Add(parentTracker);
         }
