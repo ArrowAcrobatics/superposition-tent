@@ -8,6 +8,15 @@ using UnityEngine;
  */
 public class SlimeVrTracker : MonoBehaviour
 {
+    [Tooltip("The target transform will be driven to identical position/rotation in world space coordinates as this trackers transform.")]
+    public Transform targetTransform = null;
+    private Vector3 targetTransformNeutralPos;
+    private Quaternion targetTransformNeutralRot;
+    // also copy our transforms in awake (and on tracker recenter)...
+    private Vector3 transformNeutralPos;
+    private Quaternion transformNeutralRot;
+
+
     /**
      * just a nullable wrapper for Vector3
      */
@@ -46,6 +55,8 @@ public class SlimeVrTracker : MonoBehaviour
     #region Unity Callbacks
     void Awake() {
         GetParentTracker();
+        GetTargetNeutral();
+        GetTrackerNeutral();
     }
 
     void OnEnable() {
@@ -63,6 +74,13 @@ public class SlimeVrTracker : MonoBehaviour
             localEulerAngles = null;
         }
     }
+
+    void FixedUpdate() {
+        // update targetTransform
+        targetTransform.position = targetTransformNeutralPos + (-transformNeutralPos + transform.position);
+        targetTransform.rotation = targetTransformNeutralRot * (Quaternion.Inverse(transformNeutralRot) * transform.rotation);
+    }
+
     #endregion
 
     void EnableResetCallback(bool enable) {
@@ -90,5 +108,21 @@ public class SlimeVrTracker : MonoBehaviour
 
     void GetParentTracker() {
         parentTracker = transform.parent.GetComponent<SlimeVrTracker>();
+    }
+
+    // sets neutral values for the target transform to the current pos/rot.
+    void GetTargetNeutral() {
+        if(targetTransform == null) {
+            return;
+        }
+
+        targetTransformNeutralPos = new Vector3(targetTransform.position.x, targetTransform.position.y, targetTransform.position.z);
+        targetTransformNeutralRot = new Quaternion(targetTransform.rotation.x, targetTransform.rotation.y, targetTransform.rotation.z, targetTransform.rotation.w);
+    }
+
+    // sets neutral values for our transform to the current pos/rot.
+    void GetTrackerNeutral() {
+        transformNeutralPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        transformNeutralRot = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
     }
 }

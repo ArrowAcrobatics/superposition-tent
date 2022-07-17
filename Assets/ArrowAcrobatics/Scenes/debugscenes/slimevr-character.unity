@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &144257812
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872400, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729720221599872401, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
+      propertyPath: m_Name
+      value: SlimeSkeleton_basic
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 47daee5c0ba58f14abe65a7b59b7c5be, type: 3}
 --- !u!1 &625366228
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +619,9 @@ MonoBehaviour:
   requestType: 0
   liveUpdatePosition: 1
   verboseLogging: 0
-  trackerPrefab: {fileID: 1761677191024563397, guid: edcaa92abd5f87c49bb5bb58a965bef1, type: 3}
+  resetTrackersServerSide: 0
+  resetTrackerMonobehaviours: 0
+  SlimeSkeleton: {fileID: 0}
   trackerObjects: []
   resetTrackers: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   resetTrackersFully: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
