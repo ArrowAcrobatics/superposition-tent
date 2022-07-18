@@ -18,6 +18,7 @@ public class SlimeVrTracker : MonoBehaviour
 
     public bool setPosition = false;
     public bool setRotation = true;
+    public bool invertRotation = false;
 
 
     /**
@@ -84,7 +85,9 @@ public class SlimeVrTracker : MonoBehaviour
             targetTransform.position = targetTransformNeutralPos + (-transformNeutralPos + transform.position);
         }
         if(setRotation) {
-            targetTransform.rotation = targetTransformNeutralRot * ( transform.rotation * Quaternion.Inverse(transformNeutralRot));
+            Quaternion myRotation = invertRotation ? Quaternion.Inverse(transform.rotation) : transform.rotation;
+
+            targetTransform.rotation = targetTransformNeutralRot * (myRotation * Quaternion.Inverse(transformNeutralRot));
         }
     }
 
