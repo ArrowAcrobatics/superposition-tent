@@ -16,6 +16,9 @@ public class SlimeVrTracker : MonoBehaviour
     private Vector3 transformNeutralPos;
     private Quaternion transformNeutralRot;
 
+    public bool setPosition = false;
+    public bool setRotation = true;
+
 
     /**
      * just a nullable wrapper for Vector3
@@ -77,8 +80,12 @@ public class SlimeVrTracker : MonoBehaviour
 
     void FixedUpdate() {
         // update targetTransform
-        targetTransform.position = targetTransformNeutralPos + (-transformNeutralPos + transform.position);
-        targetTransform.rotation = targetTransformNeutralRot * (Quaternion.Inverse(transformNeutralRot) * transform.rotation);
+        if(setPosition) {
+            targetTransform.position = targetTransformNeutralPos + (-transformNeutralPos + transform.position);
+        }
+        if(setRotation) {
+            targetTransform.rotation = targetTransformNeutralRot * ( transform.rotation * Quaternion.Inverse(transformNeutralRot));
+        }
     }
 
     #endregion
@@ -104,6 +111,7 @@ public class SlimeVrTracker : MonoBehaviour
     void OnSlimeReset(object sender, EventArgs e) {
         Debug.Log("tracker responded to slime reset");
         GetParentTracker();
+        GetTrackerNeutral();
     }
 
     void GetParentTracker() {
