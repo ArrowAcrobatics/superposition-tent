@@ -51,6 +51,7 @@ public class GenericEpisode : MonoBehaviour
      *  - false: this episode didn't handle the event. accept going to next episode.
      */
     public virtual bool next() {
+        Debug.Log("generic next");
         return false;
     }
 
@@ -62,6 +63,7 @@ public class GenericEpisode : MonoBehaviour
      *  - false: this episode didn't handle the event. accept going to next episode.
      */
     public virtual bool prev() {
+        Debug.Log("generic prev");
         return false;
     }
 

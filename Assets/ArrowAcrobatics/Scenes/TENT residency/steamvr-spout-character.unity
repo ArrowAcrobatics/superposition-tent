@@ -2171,7 +2171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1569268645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2539,7 +2539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1966559463}
-  - component: {fileID: 1966559462}
+  - component: {fileID: 1966559464}
   m_Layer: 0
   m_Name: PowerpointEpisode
   m_TagString: Untagged
@@ -2547,20 +2547,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1966559462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966559461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 194d05437e63a4c4f9dc8a6694894b16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraPreset: {fileID: 1785173191}
-  _objects: []
 --- !u!4 &1966559463
 Transform:
   m_ObjectHideFlags: 0
@@ -2576,6 +2562,26 @@ Transform:
   m_Father: {fileID: 668584290}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1966559464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966559461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a286f31bca84af74797a3506c8b68e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraPreset: {fileID: 1785173191}
+  _objects: []
+  _screen: {fileID: 1366506051}
+  _slides:
+  - {fileID: 2100000, guid: 2a945a48a532b774b8a7dd1c6940807e, type: 2}
+  - {fileID: 2100000, guid: 392bcf5fcb10523488a0da39384ccc0f, type: 2}
+  - {fileID: 2100000, guid: 96893278582716844a227f726a929941, type: 2}
+  - {fileID: 2100000, guid: e290da2685cef64418ed82f98e17008d, type: 2}
 --- !u!1 &2057825914
 GameObject:
   m_ObjectHideFlags: 0
