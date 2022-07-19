@@ -1105,6 +1105,7 @@ MonoBehaviour:
   _episodeLaunchers:
   - {fileID: 1966559461}
   - {fileID: 1055259315}
+  _camDolly: {fileID: 1660472677}
   prevAction: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   nextAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   loopMode: 1
@@ -1331,6 +1332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194d05437e63a4c4f9dc8a6694894b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraPreset: {fileID: 1241436741}
   _objects: []
 --- !u!1 &1080954258
 GameObject:
@@ -2250,13 +2252,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660472675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddded879e10ca184bafce0e0a209e1dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c4d29e489b76dc4f9ce5f998fa12376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  presets:
-  - {fileID: 1785173191}
-  - {fileID: 1241436741}
-  currentCameraAngle: 0
   CameraSpeed: 1
 --- !u!1 &1678901462
 GameObject:
@@ -2477,7 +2475,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1719014012}
-  - component: {fileID: 1719014013}
   m_Layer: 0
   m_Name: CameraPresets
   m_TagString: Untagged
@@ -2502,23 +2499,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1719014013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719014011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddded879e10ca184bafce0e0a209e1dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  presets:
-  - {fileID: 1785173191}
-  - {fileID: 1241436741}
-  currentCameraAngle: 0
-  CameraSpeed: 1
 --- !u!1 &1785173190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194d05437e63a4c4f9dc8a6694894b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraPreset: {fileID: 1785173191}
   _objects: []
 --- !u!4 &1966559463
 Transform:
