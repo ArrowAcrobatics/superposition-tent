@@ -436,6 +436,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spout Output Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1746948912498450513, guid: b5e33a5dce898504bbd5c426fd9a729f, type: 3}
+      propertyPath: _spoutName
+      value: SpoutVrHandyCam
+      objectReference: {fileID: 0}
     - target: {fileID: 1746948912498450517, guid: b5e33a5dce898504bbd5c426fd9a729f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -492,6 +496,10 @@ PrefabInstance:
     - target: {fileID: 4355821632444884389, guid: 097b0b7b75761d547a699c403d49ec93, type: 3}
       propertyPath: m_Name
       value: Spout Input Texture
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355821632444884408, guid: 097b0b7b75761d547a699c403d49ec93, type: 3}
+      propertyPath: _sourceName
+      value: SpoutStageCam
       objectReference: {fileID: 0}
     - target: {fileID: 4355821632444884409, guid: 097b0b7b75761d547a699c403d49ec93, type: 3}
       propertyPath: m_RootOrder
