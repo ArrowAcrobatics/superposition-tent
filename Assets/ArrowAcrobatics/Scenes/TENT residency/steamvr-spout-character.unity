@@ -1426,6 +1426,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25fafe9f852b7564fbdfdb0d4ea17ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftKnee: {fileID: 3685316489450669771}
+  rightKnee: {fileID: 3685316490228200706}
+  leftHip: {fileID: 3685316488539973308}
+  rightHip: {fileID: 3685316488539973311}
+  groin: {fileID: 3685316488539973310}
+  thresholdDeg: 20
   handstands:
   - name: straight
     audioClip: {fileID: 8300000, guid: a538e3234a0751444a0a3ebb5eba6451, type: 3}

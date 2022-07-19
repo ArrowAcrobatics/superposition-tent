@@ -16,6 +16,13 @@ public class HandstandRecognizer : MonoBehaviour
         public float groinAngle;
     }
 
-    public List<HandstandPosture> handstands = new List<HandstandPosture>();
+    public JointAngleTracker leftKnee = null;
+    public JointAngleTracker rightKnee = null;
+    public JointAngleTracker leftHip = null;
+    public JointAngleTracker rightHip = null;
+    public JointAngleTracker groin = null;
 
+    [Tooltip("maximum angle difference between measure and target")]
+    public float thresholdDeg = 20;
+    public List<HandstandPosture> handstands = new List<HandstandPosture>();
 }
