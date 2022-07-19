@@ -59,8 +59,8 @@ public class PowerpointEpisode : GenericEpisode
 
     void UpdateSlide() {
         Debug.Log("update slide to " + _currentSlide.ToString());
-        //_currentSlide
-        //_rend
-        //_slides
+        if(_rend != null && _slides != null) {
+            _rend.material = _slides[_currentSlide];
+        }
     }
 }
