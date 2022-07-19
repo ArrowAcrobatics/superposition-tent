@@ -10,9 +10,6 @@ using ArrowAcrobatics.TransformExtensions;
  */
 public class CameraPresets : MonoBehaviour
 {
-    public List<Transform> presets = new List<Transform>();
-    public int currentCameraAngle = 0;
-
     // when slerping, we keep target transform until destination reached.
     private TransformData fromLocation = null;
     private TransformData toLocation = null;
@@ -21,40 +18,13 @@ public class CameraPresets : MonoBehaviour
 
     // TODO: ease curve
 
-    [ContextMenu("set target")]
-    void setTarget() {
-        setTarget(currentCameraAngle);
-    }
-
-    [ContextMenu("next camera angle")]
-    void nextCameraAngle() {
-        setTarget(currentCameraAngle+1);
-    }
-
-    [ContextMenu("prev camera angle")]
-    void prevtCameraAngle() {
-        setTarget(currentCameraAngle-1);
-    }
-
-    void setTarget(int nextCameraAngle) {
-        int index = getIndex(nextCameraAngle);
-        Transform t = presets[index];
-
-        toLocation = t.GlobalData();
+    /**
+     * TODO: option to set parent
+     * TODO: add 'immediate' option or generic speed option
+     */
+    public void setTargetTransform(TransformData targettransform) {
+        toLocation = targettransform;
         fromLocation = null; // is set in update when null, might change between this call and next update depending on physics
-        
-        currentCameraAngle = index;
-
-        if(toLocation == null) {
-            return;
-        }
-
-#if UNITY_EDITOR
-        transform.Set(toLocation);
-        toLocation = null;
-#else
-        Debug.Log("in game position adjustments not yet implemented");
-#endif
     }
 
     void Update() {
@@ -78,17 +48,5 @@ public class CameraPresets : MonoBehaviour
             }
             
         }
-    }
-
-    private int getIndex(int index) {
-        if (index < 0) {
-            return 0;
-        }
-
-        if(index >= presets.Count) {
-            return presets.Count -1;
-        }
-
-        return index;
     }
 }

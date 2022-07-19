@@ -8,6 +8,7 @@ using UnityEngine;
  */
 public class GenericEpisode : MonoBehaviour
 {
+    public Transform _cameraPreset = null;
     public GameObject[] _objects;
 
     public void launch() {
@@ -40,6 +41,28 @@ public class GenericEpisode : MonoBehaviour
 
     public virtual void OnStop() {
 
+    }
+
+    /**
+     * User requests a next state. (E.g. powerpoint slide)
+     * 
+     * return: 
+     *  - true: this episode handled the event. Prevent going to next episode.
+     *  - false: this episode didn't handle the event. accept going to next episode.
+     */
+    public virtual bool next() {
+        return false;
+    }
+
+    /**
+     * User requests a previous state. (E.g. powerpoint slide)
+     * 
+     * return: 
+     *  - true: this episode handled the event. Prevent going to next episode.
+     *  - false: this episode didn't handle the event. accept going to next episode.
+     */
+    public virtual bool prev() {
+        return false;
     }
 
 }

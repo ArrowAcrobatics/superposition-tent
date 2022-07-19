@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using ArrowAcrobatics.TransformExtensions;
+
 /**
  * Episode manager makes the transitions from one episode to the next.
  * 
@@ -23,6 +25,9 @@ public class EpisodeManager : MonoBehaviour
     public GameObject _defaultEpisode = null;
     public GameObject[] _episodeLaunchers;
 
+    // object to ask if we can set a camera to a certain location.
+    public CameraPresets _camPreset = null;
+
     // ----------------------------------------
 
     [SerializeField] InputActionReference prevAction;
@@ -30,7 +35,6 @@ public class EpisodeManager : MonoBehaviour
 
     // ----------------------------------------
 
-    public bool wrapAround = false;
     public enum Loopmode
     {
         LoopSingle,
@@ -49,6 +53,11 @@ public class EpisodeManager : MonoBehaviour
 
     [ContextMenu("Launch prev")]
     public void prev() {
+        if(_currentEpisode != null && _currentEpisode.prev()) {
+            // current episode handled the request.
+            return;
+        }
+
         int followingIndex = _currentEpisodeIndex-1;
 
         switch(loopMode) {
@@ -65,16 +74,15 @@ public class EpisodeManager : MonoBehaviour
                 break;
             }
         }
-
-        //int n = _currentEpisodeIndex-1;
-        //if(wrapAround) {
-        //    n = n >= 0 ? n : _episodeLaunchers.Length;
-        //}
-        //launch(n);
     }
 
     [ContextMenu("Launch next")]
     public void next() {
+        if(_currentEpisode != null && _currentEpisode.next()) {
+            // current episode handled the request.
+            return;
+        }
+
         int followingIndex = _currentEpisodeIndex+1;
 
         switch(loopMode) {
@@ -91,13 +99,6 @@ public class EpisodeManager : MonoBehaviour
                 break;
             }
         }
-
-
-        //if(wrapAround) {
-        //    n = n < _episodeLaunchers.Length ? n : 0;
-        //}
-
-        //launch(n);
     }
 
     // ----------------------------------------
@@ -155,6 +156,11 @@ public class EpisodeManager : MonoBehaviour
         if(_currentEpisode != null) {
             _currentEpisodeIndex = getEpisodeIndex(i);
             _currentEpisode.launch();
+
+            if(_camPreset != null && _currentEpisode._cameraPreset != null) {
+                _camPreset.setTargetTransform(_currentEpisode._cameraPreset.GlobalData());
+            }
+
         } else {
             _currentEpisodeIndex = -1;
         }
