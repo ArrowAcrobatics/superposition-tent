@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using ArrowAcrobatics.TransformExtensions;
+
 /**
  * Makes this gameobject move towards the given gameobject (in a certain way)
+ * A null preset will halt the currently running slerp action and leave the camera in place.
  */
 public class CameraPresets : MonoBehaviour
 {
@@ -11,7 +14,12 @@ public class CameraPresets : MonoBehaviour
     public int currentCameraAngle = 0;
 
     // when slerping, we keep target transform until destination reached.
-    private Transform target = null;
+    private TransformData fromLocation = null;
+    private TransformData toLocation = null;
+    private float timePassedSinceLastSet = 0;
+    public float CameraSpeed = 1;
+
+    // TODO: ease curve
 
     [ContextMenu("set target")]
     void setTarget() {
@@ -31,22 +39,45 @@ public class CameraPresets : MonoBehaviour
     void setTarget(int nextCameraAngle) {
         int index = getIndex(nextCameraAngle);
         Transform t = presets[index];
-        target = t;
+
+        toLocation = t.GlobalData();
+        fromLocation = null; // is set in update when null, might change between this call and next update depending on physics
+        
         currentCameraAngle = index;
 
-        if(t == null) {
+        if(toLocation == null) {
             return;
         }
 
 #if UNITY_EDITOR
-        Debug.Log("in editor mode, setting target to null and relocating immediately");
-        transform.position = t.position;
-        transform.rotation = t.rotation;
+        transform.Set(toLocation);
+        toLocation = null;
 #else
         Debug.Log("in game position adjustments not yet implemented");
 #endif
+    }
 
+    void Update() {
+        if(toLocation != null) {
+            if(fromLocation == null) {
+                fromLocation = transform.GlobalData();
+                timePassedSinceLastSet = 0;
+            }
 
+            float nextTime = Mathf.Clamp01(timePassedSinceLastSet + CameraSpeed * Time.deltaTime);
+            
+            if(nextTime >= 1.0f) {
+                transform.Set(toLocation);
+                timePassedSinceLastSet = 0;
+                fromLocation = null;
+                toLocation = null;
+                Debug.Log("Cam preset reached");
+            } else {
+                transform.Set(TransformData.Slerp(fromLocation, toLocation, timePassedSinceLastSet));
+                timePassedSinceLastSet = nextTime;
+            }
+            
+        }
     }
 
     private int getIndex(int index) {
