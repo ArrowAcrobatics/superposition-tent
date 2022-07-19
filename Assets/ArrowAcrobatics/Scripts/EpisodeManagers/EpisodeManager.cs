@@ -26,7 +26,7 @@ public class EpisodeManager : MonoBehaviour
     public GameObject[] _episodeLaunchers;
 
     // object to ask if we can set a camera to a certain location.
-    public CameraPresets _camPreset = null;
+    public CameraDolly _camDolly = null;
 
     // ----------------------------------------
 
@@ -157,8 +157,8 @@ public class EpisodeManager : MonoBehaviour
             _currentEpisodeIndex = getEpisodeIndex(i);
             _currentEpisode.launch();
 
-            if(_camPreset != null && _currentEpisode._cameraPreset != null) {
-                _camPreset.setTargetTransform(_currentEpisode._cameraPreset.GlobalData());
+            if(_camDolly != null && _currentEpisode._cameraPreset != null) {
+                _camDolly.setTargetTransform(_currentEpisode._cameraPreset.GlobalData());
             }
 
         } else {

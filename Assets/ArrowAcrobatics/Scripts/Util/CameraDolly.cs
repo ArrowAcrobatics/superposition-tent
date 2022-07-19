@@ -8,7 +8,7 @@ using ArrowAcrobatics.TransformExtensions;
  * Makes this gameobject move towards the given gameobject (in a certain way)
  * A null preset will halt the currently running slerp action and leave the camera in place.
  */
-public class CameraPresets : MonoBehaviour
+public class CameraDolly : MonoBehaviour
 {
     // when slerping, we keep target transform until destination reached.
     private TransformData fromLocation = null;
@@ -35,7 +35,7 @@ public class CameraPresets : MonoBehaviour
             }
 
             float nextTime = Mathf.Clamp01(timePassedSinceLastSet + CameraSpeed * Time.deltaTime);
-            
+
             if(nextTime >= 1.0f) {
                 transform.Set(toLocation);
                 timePassedSinceLastSet = 0;
@@ -46,7 +46,7 @@ public class CameraPresets : MonoBehaviour
                 transform.Set(TransformData.Slerp(fromLocation, toLocation, timePassedSinceLastSet));
                 timePassedSinceLastSet = nextTime;
             }
-            
+
         }
     }
 }
