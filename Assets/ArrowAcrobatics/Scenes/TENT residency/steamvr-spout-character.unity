@@ -1382,6 +1382,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1121904239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1121904240}
+  - component: {fileID: 1121904241}
+  m_Layer: 0
+  m_Name: HandstandRecognition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1121904240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121904239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1289230159}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121904241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121904239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fafe9f852b7564fbdfdb0d4ea17ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handstands:
+  - name: straight
+    audioClip: {fileID: 8300000, guid: a538e3234a0751444a0a3ebb5eba6451, type: 3}
+    leftKneeAngle: 180
+    rightKneeAngle: 180
+    leftHipAngle: 180
+    rightHipAngle: 180
+    groinAngle: 0
+  - name: tuck
+    audioClip: {fileID: 8300000, guid: ee768d9cd26b2594bb80470ae285d6a8, type: 3}
+    leftKneeAngle: 70
+    rightKneeAngle: 70
+    leftHipAngle: 90
+    rightHipAngle: 90
+    groinAngle: 0
+  - name: straddle
+    audioClip: {fileID: 8300000, guid: b8a652a2eaea8a046b9aea1bebdd7c32, type: 3}
+    leftKneeAngle: 180
+    rightKneeAngle: 180
+    leftHipAngle: 90
+    rightHipAngle: 90
+    groinAngle: 90
+  - name: seven
+    audioClip: {fileID: 8300000, guid: 15c7355a98a544449bf31b734173e724, type: 3}
+    leftKneeAngle: 180
+    rightKneeAngle: 180
+    leftHipAngle: 90
+    rightHipAngle: 90
+    groinAngle: 0
 --- !u!4 &1143988463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1746948912498450517, guid: b5e33a5dce898504bbd5c426fd9a729f, type: 3}
@@ -1591,7 +1664,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1121904240}
   m_Father: {fileID: 668584290}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
