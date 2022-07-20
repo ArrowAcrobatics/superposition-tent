@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(JointAngleTracker))]
 [RequireComponent(typeof(AudioSource))]
 public class JointAnglePitchBender : MonoBehaviour
 {
+    [Tooltip("The joint to track the angle of. If null it will try to GetComponent<>")]
+    public JointAngleTracker joint;
+
     [Range(0, 180)]
     public float angleMin = 0;
     [Range(0, 180)]
@@ -45,12 +47,14 @@ public class JointAnglePitchBender : MonoBehaviour
     private JointAngleTracker.NullableFloat prevAngle = null;
     private JointAngleTracker.NullableFloat prevAngularSpeed = null;
 
-    private JointAngleTracker joint;
     private AudioSource audioSource;
 
     void Start()
     {
-        joint = GetComponent<JointAngleTracker>();
+        if(joint == null) {
+            joint = GetComponent<JointAngleTracker>();
+        }
+
         audioSource = GetComponent<AudioSource>();
     }
 
