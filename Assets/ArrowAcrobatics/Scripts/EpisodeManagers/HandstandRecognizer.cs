@@ -12,15 +12,32 @@ public class HandstandRecognizer : MonoBehaviour
         public T leftHip;
         public T rightHip;
         public T groin;
+
+        T get(int i) {
+            i = i%5;
+            switch(i) {
+                case 0: return leftKnee;
+                case 1: return rightKnee;
+                case 2: return leftHip;
+                case 3: return rightHip;
+                default: return groin;
+            }
+        }
     }
     
     public JointValueCollection<JointAngleTracker> joints;
-    
+    public JointAngleTracker leftKnee;
+    public JointAngleTracker rightKnee;
+    public JointAngleTracker leftHip;
+    public JointAngleTracker rightHip;
+    public JointAngleTracker groin;
+
     [System.Serializable]
     public class HandstandPosture {
         public string name;
         public AudioClip audioClip;
 
+        public JointValueCollection<float> angle;
         public float leftKneeAngle;
         public float rightKneeAngle;
         public float leftHipAngle;
@@ -30,12 +47,6 @@ public class HandstandRecognizer : MonoBehaviour
         public float score;
         public bool satisfiesThresholds;
     }
-
-    public JointAngleTracker leftKnee = null;
-    public JointAngleTracker rightKnee = null;
-    public JointAngleTracker leftHip = null;
-    public JointAngleTracker rightHip = null;
-    public JointAngleTracker groin = null;
 
     [Tooltip("maximum angle difference between measure and target")]
     public float thresholdDeg = 20;

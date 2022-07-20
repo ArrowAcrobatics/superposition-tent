@@ -1442,6 +1442,12 @@ MonoBehaviour:
   handstands:
   - name: straight
     audioClip: {fileID: 8300000, guid: a538e3234a0751444a0a3ebb5eba6451, type: 3}
+    angle:
+      leftKnee: 180
+      rightKnee: 180
+      leftHip: 180
+      rightHip: 180
+      groin: 10
     leftKneeAngle: 180
     rightKneeAngle: 180
     leftHipAngle: 180
@@ -1451,6 +1457,12 @@ MonoBehaviour:
     satisfiesThresholds: 0
   - name: tuck
     audioClip: {fileID: 8300000, guid: ee768d9cd26b2594bb80470ae285d6a8, type: 3}
+    angle:
+      leftKnee: 70
+      rightKnee: 70
+      leftHip: 90
+      rightHip: 90
+      groin: 10
     leftKneeAngle: 70
     rightKneeAngle: 70
     leftHipAngle: 90
@@ -1460,6 +1472,12 @@ MonoBehaviour:
     satisfiesThresholds: 0
   - name: straddle
     audioClip: {fileID: 8300000, guid: b8a652a2eaea8a046b9aea1bebdd7c32, type: 3}
+    angle:
+      leftKnee: 180
+      rightKnee: 180
+      leftHip: 90
+      rightHip: 90
+      groin: 90
     leftKneeAngle: 180
     rightKneeAngle: 180
     leftHipAngle: 90
@@ -1469,6 +1487,12 @@ MonoBehaviour:
     satisfiesThresholds: 0
   - name: seven
     audioClip: {fileID: 8300000, guid: 15c7355a98a544449bf31b734173e724, type: 3}
+    angle:
+      leftKnee: 180
+      rightKnee: 180
+      leftHip: 90
+      rightHip: 90
+      groin: 10
     leftKneeAngle: 180
     rightKneeAngle: 180
     leftHipAngle: 90
