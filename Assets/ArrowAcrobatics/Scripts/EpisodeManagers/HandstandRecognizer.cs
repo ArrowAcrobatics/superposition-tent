@@ -40,29 +40,26 @@ public class HandstandRecognizer : MonoBehaviour
         }
     }
     
-    public JointValueCollection<JointAngleTracker> joints;
 
     [System.Serializable]
     public class HandstandPosture {
         public string name;
         public AudioClip audioClip;
 
-        public JointValueCollection<float> angle;
-        public JointValueCollection<float> score;
-        public JointValueCollection<bool> satisfied;
-
-        public float leftKneeAngle;
-        public float rightKneeAngle;
-        public float leftHipAngle;
-        public float rightHipAngle;
-        public float groinAngle;
-
-        public float scoreTotal;
         public bool satisfiesAll;
+        public float scoreTotal;
+
+        public JointValueCollection<bool> satisfied;
+        public JointValueCollection<float> score;
+        public JointValueCollection<float> angle;
+
     }
 
+    
     [Tooltip("maximum angle difference between measure and target")]
     public float thresholdDeg = 20;
+
+    public JointValueCollection<JointAngleTracker> joints;
     public List<HandstandPosture> handstands = new List<HandstandPosture>();
 
 
