@@ -155,9 +155,9 @@ MonoBehaviour:
   _defaultEpisode: {fileID: 0}
   _episodeLaunchers:
   - {fileID: 1067432658}
+  _camDolly: {fileID: 0}
   prevAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   nextAction: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  wrapAround: 0
   loopMode: 0
   debugEpisode: 0
 --- !u!4 &625366230
@@ -255,6 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1001 &676819440
@@ -348,6 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1 &730892719
@@ -692,6 +700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1067432658
@@ -723,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194d05437e63a4c4f9dc8a6694894b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraPreset: {fileID: 0}
   _objects: []
 --- !u!4 &1067432660
 Transform:
@@ -884,6 +897,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1266662371
@@ -1092,6 +1109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1337389692 stripped
@@ -1234,7 +1255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1431313271
 Transform:
   m_ObjectHideFlags: 0
@@ -1347,6 +1368,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b68ddaeead8141b927ef27aa6492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  setPosition: 0
+  setRotation: 1
+  invertRotation: 0
   localEulerAngles:
     angles: {x: 0, y: 0, z: 0}
 --- !u!1 &1630512914

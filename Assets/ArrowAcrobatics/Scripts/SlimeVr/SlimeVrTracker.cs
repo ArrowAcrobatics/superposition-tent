@@ -81,6 +81,10 @@ public class SlimeVrTracker : MonoBehaviour
 
     void FixedUpdate() {
         // update targetTransform
+        if(targetTransform == null) {
+            return;
+        }
+
         if(setPosition) {
             targetTransform.position = targetTransformNeutralPos + (-transformNeutralPos + transform.position);
         }
