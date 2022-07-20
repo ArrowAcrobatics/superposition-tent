@@ -39,11 +39,14 @@ public class EpisodeManager : MonoBehaviour
     {
         LoopSingle,
         LoopAll,
-        LoopNone,
+        LoopLinear,
     }
     public Loopmode loopMode;
     
     public int debugEpisode = 0;
+
+    [Tooltip("read/debug only indication of current episode")]
+    public string _currentEpisodeName = "";
 
     [ContextMenu("Launch debug episode")]
     void LaunchDebugEpisode() {
@@ -61,7 +64,7 @@ public class EpisodeManager : MonoBehaviour
         int followingIndex = _currentEpisodeIndex-1;
 
         switch(loopMode) {
-            case Loopmode.LoopNone: {
+            case Loopmode.LoopLinear: {
                 launch(followingIndex);
                 break;
             }
@@ -86,7 +89,7 @@ public class EpisodeManager : MonoBehaviour
         int followingIndex = _currentEpisodeIndex+1;
 
         switch(loopMode) {
-            case Loopmode.LoopNone: {
+            case Loopmode.LoopLinear: {
                 launch(followingIndex);
                 break;
             }
@@ -146,11 +149,12 @@ public class EpisodeManager : MonoBehaviour
      */
     public void launch(int i) {
         Debug.Log("launch" + i.ToString());
-
+        
         if(_currentEpisode != null) {
             _currentEpisode.stop();
         }
 
+        updateEpisodeName(i);
         _currentEpisode = getEpisode(i);
 
         if(_currentEpisode != null) {
@@ -181,5 +185,11 @@ public class EpisodeManager : MonoBehaviour
         }
         
         return _defaultEpisode.GetComponent<GenericEpisode>();
+    }
+
+    void updateEpisodeName(int i) {
+        int currEpiIndex = getEpisodeIndex(i);
+        _currentEpisodeName = currEpiIndex < 0 ? "null" : _episodeLaunchers[currEpiIndex].name;
+        _currentEpisodeName = _currentEpisodeIndex.ToString() + ": " + _currentEpisodeName;
     }
 }
