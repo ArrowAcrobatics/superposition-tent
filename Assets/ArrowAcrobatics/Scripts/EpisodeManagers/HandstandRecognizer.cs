@@ -13,24 +13,34 @@ public class HandstandRecognizer : MonoBehaviour
         public T rightHip;
         public T groin;
 
-        T get(int i) {
+        public T get(int i) {
             i = i%5;
             switch(i) {
-                case 0: return leftKnee;
-                case 1: return rightKnee;
-                case 2: return leftHip;
-                case 3: return rightHip;
+                case 0:  return leftKnee;
+                case 1:  return rightKnee;
+                case 2:  return leftHip;
+                case 3:  return rightHip;
                 default: return groin;
             }
+        }
+
+        public T set(int i, T v) {
+            i = i%5;
+            switch(i) {
+                case 0:  leftKnee  = v; return v;
+                case 1:  rightKnee = v; return v;
+                case 2:  leftHip   = v; return v;
+                case 3:  rightHip  = v; return v;
+                default: groin     = v; return v;
+            }
+        }
+
+        public int Count {
+            get { return 5; }
         }
     }
     
     public JointValueCollection<JointAngleTracker> joints;
-    public JointAngleTracker leftKnee;
-    public JointAngleTracker rightKnee;
-    public JointAngleTracker leftHip;
-    public JointAngleTracker rightHip;
-    public JointAngleTracker groin;
 
     [System.Serializable]
     public class HandstandPosture {
@@ -38,14 +48,17 @@ public class HandstandRecognizer : MonoBehaviour
         public AudioClip audioClip;
 
         public JointValueCollection<float> angle;
+        public JointValueCollection<float> score;
+        public JointValueCollection<bool> satisfied;
+
         public float leftKneeAngle;
         public float rightKneeAngle;
         public float leftHipAngle;
         public float rightHipAngle;
         public float groinAngle;
 
-        public float score;
-        public bool satisfiesThresholds;
+        public float scoreTotal;
+        public bool satisfiesAll;
     }
 
     [Tooltip("maximum angle difference between measure and target")]
@@ -92,54 +105,28 @@ public class HandstandRecognizer : MonoBehaviour
         _currentHandstandname = null;
 
         foreach(HandstandPosture handstand in handstands) {
-            bool satisfied = true;
-            float totalScore = 0;
-            float jointscore = 0;
+            bool satisfiesAll = true; // accumulate (&=) all thresholds.
+            float scoreTotal = 0; // accumulate (+=) all scores.
 
-            if(leftKnee.angle  != null) {
-                jointscore = Mathf.Abs(handstand.leftKneeAngle  -leftKnee.angle.val);
-                totalScore += jointscore*jointscore;
-                satisfied &= jointscore < thresholdDeg;
-            } else { 
-                satisfied = false;
+            // for all joints, recompute score
+            for (int i = 0; i < joints.Count; i++) {
+                float jointscore = 0;
+                JointAngleTracker joint = joints.get(i);
+
+                if(joint != null) {
+                    jointscore = Mathf.Abs(handstand.angle.get(i) -joint.angle.val);
+
+                    scoreTotal += handstand.score.set(i, jointscore);
+                    satisfiesAll &= handstand.satisfied.set(i, jointscore < thresholdDeg);
+                } else {
+                    satisfiesAll &= handstand.satisfied.set(i, false);
+                }
             }
 
-            if(rightKnee.angle  != null) {
-                jointscore = Mathf.Abs(handstand.rightKneeAngle  -rightKnee.angle.val);
-                totalScore += jointscore*jointscore;
-                satisfied &= jointscore < thresholdDeg;
-            } else {
-                satisfied = false;
-            }
+            handstand.satisfiesAll = satisfiesAll;
+            handstand.scoreTotal = scoreTotal;
 
-            if(leftHip.angle  != null) {
-                jointscore = Mathf.Abs(handstand.leftHipAngle  -leftHip.angle.val);
-                totalScore += jointscore*jointscore;
-                satisfied &= jointscore < thresholdDeg;
-            } else {
-                satisfied = false;
-            }
-
-            if(rightHip.angle  != null) {
-                jointscore = Mathf.Abs(handstand.rightHipAngle  -rightHip.angle.val);
-                totalScore += jointscore*jointscore;
-                satisfied &= jointscore < thresholdDeg;
-            } else {
-                satisfied = false;
-            }
-
-            if(groin.angle  != null) {
-                jointscore = Mathf.Abs(handstand.groinAngle  -groin.angle.val);
-                totalScore += jointscore*jointscore;
-                satisfied &= jointscore < thresholdDeg;
-            } else {
-                satisfied = false;
-            }
-
-            handstand.satisfiesThresholds = satisfied;
-            handstand.score = totalScore;
-
-            if (satisfied) {
+            if (satisfiesAll) {
                 _currentHandstandname = handstand.audioClip;
             }
         }
