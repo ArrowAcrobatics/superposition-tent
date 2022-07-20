@@ -29,11 +29,45 @@ public class HandstandRecognizer : MonoBehaviour
     public float thresholdDeg = 20;
     public List<HandstandPosture> handstands = new List<HandstandPosture>();
 
+
+    private AudioClip _currentHandstandname = null;
+    private IEnumerator audioCoroutine;
+    private AudioSource _audioSource = null;
+
+    void Awake() {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    void OnEnable() {
+        audioCoroutine = AudioPlayer();
+        StartCoroutine(audioCoroutine);
+    }
+
+    void OnDisable() {
+        StopCoroutine(audioCoroutine);
+        if(_audioSource != null) {
+            _audioSource.Stop();
+        }
+    }
+
     void Update() {
         UpdateScores();
     }
 
+    IEnumerator AudioPlayer() {
+        while(true) {
+           if(_audioSource == null || _currentHandstandname == null) {
+                yield return new WaitForFixedUpdate();
+            } else {
+                _audioSource.PlayOneShot(_currentHandstandname, 1.0f);
+                yield return new WaitForSeconds(_currentHandstandname.length);
+            }
+        }
+    }
+
     void UpdateScores() {
+        _currentHandstandname = null;
+
         foreach(HandstandPosture handstand in handstands) {
             bool satisfied = true;
             float totalScore = 0;
@@ -81,6 +115,10 @@ public class HandstandRecognizer : MonoBehaviour
 
             handstand.satisfiesThresholds = satisfied;
             handstand.score = totalScore;
+
+            if (satisfied) {
+                _currentHandstandname = handstand.audioClip;
+            }
         }
     }
 }
