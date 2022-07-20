@@ -5,6 +5,18 @@ using UnityEngine;
 public class HandstandRecognizer : MonoBehaviour
 {
     [System.Serializable]
+    public class JointValueCollection<T>
+    {
+        public T leftKnee;
+        public T rightKnee;
+        public T leftHip;
+        public T rightHip;
+        public T groin;
+    }
+    
+    public JointValueCollection<JointAngleTracker> joints;
+    
+    [System.Serializable]
     public class HandstandPosture {
         public string name;
         public AudioClip audioClip;
