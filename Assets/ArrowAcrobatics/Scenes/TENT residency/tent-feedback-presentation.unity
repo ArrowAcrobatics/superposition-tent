@@ -1440,6 +1440,8 @@ MonoBehaviour:
     leftHipAngle: 180
     rightHipAngle: 180
     groinAngle: 0
+    score: 0
+    satisfiesThresholds: 0
   - name: tuck
     audioClip: {fileID: 8300000, guid: ee768d9cd26b2594bb80470ae285d6a8, type: 3}
     leftKneeAngle: 70
@@ -1447,6 +1449,8 @@ MonoBehaviour:
     leftHipAngle: 90
     rightHipAngle: 90
     groinAngle: 0
+    score: 0
+    satisfiesThresholds: 0
   - name: straddle
     audioClip: {fileID: 8300000, guid: b8a652a2eaea8a046b9aea1bebdd7c32, type: 3}
     leftKneeAngle: 180
@@ -1454,6 +1458,8 @@ MonoBehaviour:
     leftHipAngle: 90
     rightHipAngle: 90
     groinAngle: 90
+    score: 0
+    satisfiesThresholds: 0
   - name: seven
     audioClip: {fileID: 8300000, guid: 15c7355a98a544449bf31b734173e724, type: 3}
     leftKneeAngle: 180
@@ -1461,6 +1467,8 @@ MonoBehaviour:
     leftHipAngle: 90
     rightHipAngle: 90
     groinAngle: 0
+    score: 0
+    satisfiesThresholds: 0
 --- !u!4 &1143988463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1746948912498450517, guid: b5e33a5dce898504bbd5c426fd9a729f, type: 3}
@@ -2362,7 +2370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660472675}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.14, z: 1.15}
+  m_LocalPosition: {x: 0, y: 1.79, z: -1.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
