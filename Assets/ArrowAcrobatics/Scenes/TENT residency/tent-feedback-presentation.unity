@@ -296,6 +296,37 @@ Transform:
   m_Father: {fileID: 1032255942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &346478224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346478225}
+  m_Layer: 0
+  m_Name: classroom_cam_teacherview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &346478225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346478224}
+  m_LocalRotation: {x: 0, y: 0.9937475, z: 0.11165105, w: 0}
+  m_LocalPosition: {x: 0, y: 0.9, z: 1.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719014012}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -12.821, y: 180, z: 0}
 --- !u!1 &367154434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,7 +1136,10 @@ MonoBehaviour:
   _episodeLaunchers:
   - {fileID: 1966559461}
   - {fileID: 985522003}
+  - {fileID: 1358124178}
+  - {fileID: 985522003}
   - {fileID: 1055259315}
+  - {fileID: 985522003}
   - {fileID: 1289230157}
   - {fileID: 1462257703}
   _camDolly: {fileID: 1660472677}
@@ -1128,6 +1162,7 @@ Transform:
   m_Children:
   - {fileID: 1966559463}
   - {fileID: 985522005}
+  - {fileID: 1358124179}
   - {fileID: 1055259316}
   - {fileID: 1289230159}
   - {fileID: 1462257704}
@@ -1624,7 +1659,7 @@ Transform:
   - {fileID: 331809233}
   - {fileID: 739272369}
   m_Father: {fileID: 1660472676}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1055259315
 GameObject:
@@ -1656,7 +1691,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 668584290}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1055259317
 MonoBehaviour:
@@ -2260,7 +2295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1241436741}
   m_Layer: 0
-  m_Name: classroom_cam
+  m_Name: classroom_cam_studentview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2327,7 +2362,7 @@ Transform:
   m_Children:
   - {fileID: 1121904240}
   m_Father: {fileID: 668584290}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1336401083
 GameObject:
@@ -2483,6 +2518,52 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1358124178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358124179}
+  - component: {fileID: 1358124180}
+  m_Layer: 0
+  m_Name: ClassroomEpisode-teacherview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1358124179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358124178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 668584290}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358124180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358124178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194d05437e63a4c4f9dc8a6694894b16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraPreset: {fileID: 346478225}
+  _objects: []
 --- !u!1 &1366506051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,7 +2692,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 668584290}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1462257705
 MonoBehaviour:
@@ -2629,14 +2710,13 @@ MonoBehaviour:
   _objects: []
   _screen: {fileID: 1366506051}
   _slides:
-  - {fileID: 2100000, guid: 2a945a48a532b774b8a7dd1c6940807e, type: 2}
-  - {fileID: 2100000, guid: 392bcf5fcb10523488a0da39384ccc0f, type: 2}
-  - {fileID: 2100000, guid: e290da2685cef64418ed82f98e17008d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 837355323bc91ad4bba7cf8a1c55ae50, type: 2}
+  - {fileID: 2100000, guid: 156e25d5ff4d32643b5682f7e730d713, type: 2}
+  - {fileID: 2100000, guid: 104c9accce3993d49a6dd7b0ce4253a6, type: 2}
+  - {fileID: 2100000, guid: 3a1a8433a13944e4faca19a0424b47b0, type: 2}
+  - {fileID: 2100000, guid: 0d81db6228e28cb439e29ce8dbc92e3f, type: 2}
+  - {fileID: 2100000, guid: 4c7a3147e6214514ca61b593ad37f9bd, type: 2}
+  - {fileID: 2100000, guid: 3ce1af2ff6d61e949ae91e748eec238e, type: 2}
 --- !u!1 &1482780192
 GameObject:
   m_ObjectHideFlags: 0
@@ -3230,8 +3310,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1143988463}
   - {fileID: 1032255942}
+  - {fileID: 1143988463}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3488,6 +3568,7 @@ Transform:
   m_Children:
   - {fileID: 1785173191}
   - {fileID: 1241436741}
+  - {fileID: 346478225}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
