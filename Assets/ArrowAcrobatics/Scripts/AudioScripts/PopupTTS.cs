@@ -131,7 +131,11 @@ public class PopupTTS : MonoBehaviour
             if(currentFragment._clip != null) {
                 _source.clip = currentFragment._clip;
                 _source.Play();
-                yield return new WaitForSeconds(currentFragment._duration);
+                float duration = currentFragment._duration;
+                if(currentFragment._addClipLengthToDuration) {
+                    duration += currentFragment._clip.length;
+                }
+                yield return new WaitForSeconds(duration);
             }
 
             // finished playing current fragment, so we go to next or wait for user to make a change.

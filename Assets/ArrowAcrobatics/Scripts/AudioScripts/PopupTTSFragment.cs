@@ -9,4 +9,5 @@ public struct PopupTTSFragment {
     public string _text;
     public float _duration;
     public bool _waitForUserinput;
+    public bool _addClipLengthToDuration;
 }
