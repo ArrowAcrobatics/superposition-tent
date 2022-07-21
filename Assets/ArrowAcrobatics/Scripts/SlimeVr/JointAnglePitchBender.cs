@@ -20,7 +20,20 @@ public class JointAnglePitchBender : MonoBehaviour
 
     public bool applyAngleSmoothing;
     public bool applyAngularSpeedSmoothing;
-    
+
+    public enum PitchMode {
+        Continuous,
+        TwelveTone,
+        Diatonic,
+        Pentatonic
+    }
+    public PitchMode pitchMode;
+
+    public bool DiscretizeTones = false;
+    public float relativeAngleDebug;
+    public float rounded12toneAngleDebug;
+
+
     public enum VolumeMode
     {
         ConstantMin,
@@ -103,9 +116,7 @@ public class JointAnglePitchBender : MonoBehaviour
                 prevAngularSpeed = angularSpeed;
             }
 
-            audioSource.pitch = Mathf.Lerp(pitchMin, pitchMax,
-                Mathf.InverseLerp(angleMin, angleMax, angle)
-            );
+            audioSource.pitch = getPitch(angle);
         }
 
         if(joint.angle == null || prevAngle == null) {
@@ -115,5 +126,37 @@ public class JointAnglePitchBender : MonoBehaviour
         }
          
         prevAngle = joint.angle;
+    }
+
+    float getPitch(float angle) {
+        float relativeAngle = Mathf.InverseLerp(angleMin, angleMax, angle);
+        relativeAngleDebug = relativeAngle;
+
+        if (pitchMode == PitchMode.Continuous) {
+            return Mathf.Lerp(pitchMin, pitchMax, relativeAngle);
+        }
+
+        int rounded12toneAngle = (int)(relativeAngle * 12); // includes the octave
+        if(rounded12toneAngle < 0 ) { rounded12toneAngle  = 0; }
+        if(rounded12toneAngle > 12) { rounded12toneAngle  = 12; }
+
+        switch(pitchMode) {
+            case PitchMode.TwelveTone: {
+                return pitchMin * Mathf.Pow(2, rounded12toneAngle/12.0f);
+            }
+            case PitchMode.Diatonic: {
+                int[] diatonicMap = { 0, 0, 2, 2, 4, 5, 5, 7, 7, 9, 9, 11, 12 };
+                rounded12toneAngle = diatonicMap[rounded12toneAngle];
+                break;
+            }
+            case PitchMode.Pentatonic: {
+                int[] pentatonicMap = { 1, 1, 3, 3, 3, 6, 6, 8, 8, 10, 10, 10, 13 };
+                rounded12toneAngle = pentatonicMap[rounded12toneAngle];
+                break;
+            }
+        }
+        rounded12toneAngleDebug = rounded12toneAngle;
+
+        return pitchMin * Mathf.Pow(2, rounded12toneAngle/12.0f);
     }
 }

@@ -234,7 +234,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1483,6 +1483,9 @@ MonoBehaviour:
   pitchMax: 2
   applyAngleSmoothing: 1
   applyAngularSpeedSmoothing: 1
+  DiscretizeTones: 0
+  relativeAngleDebug: 0
+  rounded12toneAngleDebug: 0
   volumeMode: 2
   volumeMinAngularSpeed: 5
   volumeMaxAngularSpeed: 180
@@ -2211,6 +2214,9 @@ MonoBehaviour:
   pitchMax: 2
   applyAngleSmoothing: 1
   applyAngularSpeedSmoothing: 1
+  DiscretizeTones: 0
+  relativeAngleDebug: 0
+  rounded12toneAngleDebug: 0
   volumeMode: 2
   volumeMinAngularSpeed: 5
   volumeMaxAngularSpeed: 180
@@ -2580,6 +2586,9 @@ MonoBehaviour:
   pitchMax: 2
   applyAngleSmoothing: 1
   applyAngularSpeedSmoothing: 1
+  DiscretizeTones: 0
+  relativeAngleDebug: 0
+  rounded12toneAngleDebug: 0
   volumeMode: 2
   volumeMinAngularSpeed: 5
   volumeMaxAngularSpeed: 180
@@ -3788,6 +3797,9 @@ MonoBehaviour:
   pitchMax: 2
   applyAngleSmoothing: 1
   applyAngularSpeedSmoothing: 1
+  DiscretizeTones: 0
+  relativeAngleDebug: 0
+  rounded12toneAngleDebug: 0
   volumeMode: 2
   volumeMinAngularSpeed: 5
   volumeMaxAngularSpeed: 180
@@ -3942,6 +3954,9 @@ MonoBehaviour:
   pitchMax: 2
   applyAngleSmoothing: 1
   applyAngularSpeedSmoothing: 1
+  DiscretizeTones: 0
+  relativeAngleDebug: 0
+  rounded12toneAngleDebug: 0
   volumeMode: 2
   volumeMinAngularSpeed: 5
   volumeMaxAngularSpeed: 180
