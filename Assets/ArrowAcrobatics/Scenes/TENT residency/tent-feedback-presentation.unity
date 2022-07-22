@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _popUp: {fileID: 7995482190648666126, guid: 25ea2fdb87ee9584e86228a8289ad9a2, type: 3}
   _initWait: 0
-  _gotoNextTimeout: 15
+  _gotoNextTimeout: 12
   _spawnWaitStart: 2
   _spawnWaitMin: 0.2
   _spawnWaitReduceFactor: 0.7
