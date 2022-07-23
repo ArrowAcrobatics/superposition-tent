@@ -18,7 +18,9 @@ using ArrowAcrobatics.TransformExtensions;
  */
 public class EpisodeManager : MonoBehaviour
 {
-    private int _currentEpisodeIndex = 0;
+    public int _currentEpisodeIndex {
+        get; private set;
+    }
     private GenericEpisode _currentEpisode = null;
 
     // we are storing game objects to avoid running into the old serializer problem hassles.
@@ -45,13 +47,15 @@ public class EpisodeManager : MonoBehaviour
     
     public int debugEpisode = 0;
 
-    [Tooltip("read/debug only indication of current episode")]
-    public string _currentEpisodeName = "";
-
     [ContextMenu("Launch debug episode")]
-    void LaunchDebugEpisode() {
+    public void LaunchDebugEpisode() {
         Debug.Log("Perform operation");
         launch(debugEpisode);
+    }
+
+    void OnValidate() {
+        if (debugEpisode < 0) { debugEpisode = -1; }
+        if (debugEpisode >= _episodeLaunchers.Length) { debugEpisode = -1; }
     }
 
     [ContextMenu("Launch prev")]
@@ -154,7 +158,6 @@ public class EpisodeManager : MonoBehaviour
             _currentEpisode.stop();
         }
 
-        updateEpisodeName(i);
         _currentEpisode = getEpisode(i);
 
         if(_currentEpisode != null) {
@@ -187,9 +190,4 @@ public class EpisodeManager : MonoBehaviour
         return _defaultEpisode.GetComponent<GenericEpisode>();
     }
 
-    void updateEpisodeName(int i) {
-        int currEpiIndex = getEpisodeIndex(i);
-        _currentEpisodeName = currEpiIndex < 0 ? "null" : _episodeLaunchers[currEpiIndex].name;
-        _currentEpisodeName = _currentEpisodeIndex.ToString() + ": " + _currentEpisodeName;
-    }
 }
